@@ -1,0 +1,13 @@
+TODO
+- support easy remote debug via eclipse
+- restart after pom.xml change
+- restart after class compilation change
+- allow to run unit tests via web :)
+- compile
+- unit-test
+- acceptance-test
+- allow to run acceptance tests via web
+- war: generate war
+- package: generate zip with main
+- include vraptor-environment, vraptor-simplemail, vraptor-errorcontrol
+- vraptor-console script with huge memory allocation?

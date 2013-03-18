@@ -1,0 +1,85 @@
+package br.com.caelum.vraptor.console.command;
+
+import static br.com.caelum.vraptor.console.command.CommandLine.command;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+
+import br.com.caelum.vraptor.console.command.jetty.VRaptorServer;
+
+public class WatchPom implements Command {
+
+	private final static CommandLine[] commands = new CommandLine[] {
+			command("compile"),
+			command("dependency:copy-dependencies",
+					"-DoutputDirectory=src/main/webapp/WEB-INF/lib",
+					"-DincludeScope=runtime",
+					"-Dsilent=true",
+					"-DprependGroupId=true"
+					) };
+
+	private final static Maven mvn = new Maven();
+
+	@Override
+	public void execute() throws Exception {
+		WatchService service = FileSystems.getDefault().newWatchService();
+		configureWatcher(new File("."), service);
+		watchForChanges(service, null);
+	}
+
+	private static void configureWatcher(File listeningTo, WatchService service)
+			throws IOException {
+		Path path = listeningTo.toPath();
+		path.register(service, StandardWatchEventKinds.ENTRY_CREATE,
+				StandardWatchEventKinds.ENTRY_DELETE,
+				StandardWatchEventKinds.ENTRY_MODIFY);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void watchForChanges(final WatchService watcher,
+			final VRaptorServer server) {
+		Runnable onChange = new Runnable() {
+			public void run() {
+				while (true) {
+					try {
+						WatchKey key = watcher.take();
+						for (WatchEvent<?> event : key.pollEvents()) {
+							WatchEvent<Path> ev = (WatchEvent<Path>) event;
+							Path filename = ev.context();
+							if (filename.toFile().getName().equals("pom.xml")) {
+								System.out.println("pom changed");
+								runCommands();
+							}
+						}
+						key.reset();
+					} catch (InterruptedException e) {
+						System.out.println("Unable to detect change");
+					}
+				}
+			}
+
+			private void runCommands() {
+				for (CommandLine command : commands) {
+					runCommand(command);
+				}
+			}
+
+			private void runCommand(CommandLine command) {
+				try {
+					mvn.execute(command);
+				} catch (Exception e) {
+					System.out.println("Unable to run " + command);
+					e.printStackTrace();
+				}
+			}
+		};
+		new Thread(onChange).start();
+	}
+
+}
