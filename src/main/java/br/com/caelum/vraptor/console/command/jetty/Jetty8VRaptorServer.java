@@ -14,12 +14,14 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class VRaptorServer {
+import br.com.caelum.vraptor.console.command.UnitTests;
+
+public class Jetty8VRaptorServer {
 
 	private final Server server;
 	private final ContextHandlerCollection contexts;
 
-	public VRaptorServer(String webappDirLocation, String webXmlLocation) {
+	public Jetty8VRaptorServer(String webappDirLocation, String webXmlLocation) {
 		this.server = createServer();
 		this.contexts = new ContextHandlerCollection();
 		reloadContexts(webappDirLocation, webXmlLocation);
@@ -27,7 +29,14 @@ public class VRaptorServer {
 
 	private void reloadContexts(String webappDirLocation, String webXmlLocation) {
 		WebAppContext context = loadContext(webappDirLocation, webXmlLocation);
-		contexts.setHandlers(new Handler[] { context, systemRestart() });
+		contexts.setHandlers(new Handler[] { context, systemRestart(), unitTests(), targetContext() });
+	}
+
+	private Handler targetContext() {
+		WebAppContext handler = new WebAppContext();
+		handler.setResourceBase("target");
+		handler.setContextPath("/target");
+		return handler;
 	}
 
 	public void start() throws Exception {
@@ -69,7 +78,30 @@ public class VRaptorServer {
 		return context;
 	}
 
-	void restartContexts() {
+	private ContextHandler unitTests() {
+		AbstractHandler system = new AbstractHandler() {
+			@Override
+			public void handle(String target, Request baseRequest,
+					HttpServletRequest request, HttpServletResponse response)
+					throws IOException, ServletException {
+				try {
+					new UnitTests().execute();
+					response.sendRedirect("/target/site/surefire-report.html");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				baseRequest.setHandled(true);
+			}
+		};
+		ContextHandler context = new ContextHandler();
+		context.setContextPath("/vraptor/tests/unit");
+		context.setResourceBase(".");
+		context.setClassLoader(Thread.currentThread().getContextClassLoader());
+		context.setHandler(system);
+		return context;
+	}
+
+	public void restartContexts() {
 		try {
 			contexts.stop();
 			contexts.start();
@@ -89,6 +121,10 @@ public class VRaptorServer {
 
 	private static String getPort() {
 		return System.getenv("PORT");
+	}
+
+	public void stop() throws Exception {
+		server.stop();
 	}
 
 }

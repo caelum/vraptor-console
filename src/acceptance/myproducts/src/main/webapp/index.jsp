@@ -1,3 +1,0 @@
-<html>
-Main page
-</html>

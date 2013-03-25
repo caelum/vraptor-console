@@ -11,7 +11,7 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
-import br.com.caelum.vraptor.console.command.jetty.VRaptorServer;
+import br.com.caelum.vraptor.console.command.jetty.Jetty8VRaptorServer;
 
 public class WatchPom implements Command {
 
@@ -29,21 +29,29 @@ public class WatchPom implements Command {
 	@Override
 	public void execute() throws Exception {
 		WatchService service = FileSystems.getDefault().newWatchService();
-		configureWatcher(new File("."), service);
+		configureWatcher(new File("."), service, false);
+		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service, true);
 		watchForChanges(service, null);
 	}
 
-	private static void configureWatcher(File listeningTo, WatchService service)
+	private static void configureWatcher(File listeningTo, WatchService service, boolean recursive)
 			throws IOException {
 		Path path = listeningTo.toPath();
 		path.register(service, StandardWatchEventKinds.ENTRY_CREATE,
 				StandardWatchEventKinds.ENTRY_DELETE,
 				StandardWatchEventKinds.ENTRY_MODIFY);
+		if(recursive) {
+			for(File f : listeningTo.listFiles()) {
+				if(f.isDirectory()) {
+					configureWatcher(f, service, recursive);
+				}
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private static void watchForChanges(final WatchService watcher,
-			final VRaptorServer server) {
+			final Jetty8VRaptorServer server) {
 		Runnable onChange = new Runnable() {
 			public void run() {
 				while (true) {
@@ -52,9 +60,14 @@ public class WatchPom implements Command {
 						for (WatchEvent<?> event : key.pollEvents()) {
 							WatchEvent<Path> ev = (WatchEvent<Path>) event;
 							Path filename = ev.context();
-							if (filename.toFile().getName().equals("pom.xml")) {
+							String name = filename.toFile().getName();
+							if (name.equals("pom.xml")) {
 								System.out.println("pom changed");
 								runCommands();
+							} else if(name.endsWith(".class")) {
+								System.out.println("Needs to restart (class " + name + " changed)");
+							} else {
+								System.err.println("Change to " + name + " was ignored");
 							}
 						}
 						key.reset();

@@ -14,6 +14,7 @@
 		<jetty.jsp.version>8.1.4.v20120524</jetty.jsp.version>
 	</properties>
 
+
 	<scm>
 		<url>http://github.com/caelum/vraptor-console-myproducts</url>
 		<connection>scm:git:git://github.com/caelum/vraptor-console-myproducts</connection>

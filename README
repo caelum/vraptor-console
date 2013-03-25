@@ -1,13 +1,31 @@
+START:
+
+	java -Djava.security.policy=vraptor.police -jar vraptor-console.jar
+
+SUPPORTED
+	run ==> (re)starts the jetty server
+	restart ==> (re)starts the jetty server
+	stop ==> stops the jetty server
+	unitTests => mvn test surefire-report:report
+	compile => mvn compile
+	war => mvn package
+	
+URIS
+
+	/target ==> display the target directory
+	/tests/unit ==> unitTests
+
 TODO
+- package: generate zip with main
+- vraptor-console script with huge memory allocation?
+- vraptor-console easy to install
+- allow to run jasmine JS tests
+- doc on "new project"
+- docs on "how to configure your project"
+- support multiple jetty versions
+- tests
+
 - support easy remote debug via eclipse
-- restart after pom.xml change
-- restart after class compilation change
-- allow to run unit tests via web :)
-- compile
-- unit-test
 - acceptance-test
 - allow to run acceptance tests via web
-- war: generate war
-- package: generate zip with main
 - include vraptor-environment, vraptor-simplemail, vraptor-errorcontrol
-- vraptor-console script with huge memory allocation?
