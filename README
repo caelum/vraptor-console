@@ -10,6 +10,7 @@ SUPPORTED
 	unitTests => mvn test surefire-report:report
 	compile => mvn compile
 	war => mvn package
+	custom class actions located in target/vraptor-console-extra will be loaded automatically 
 	
 Production
 
@@ -20,26 +21,25 @@ To go live, do:
 
 Development
 
-	Support remote debug via port 1044, simply connect to it.
-
+	Support remote debug via port 1044, simply connect to it via Eclipse.
 	
 URIS
 
 	/target ==> display the target directory
 	/tests/unit ==> unitTests
 
-TODO
-- LIVE: do not add extra contexts 
+TODO BEFORE RELEASE 1
+- LIVE: do not add extra contexts
 - LIVE: instead of -Dvraptor.webappdir use java -jar vraptor-console-1.0.0.jar run myapp.war
-- vraptor-console.sh with huge memory allocation
-- vraptor-console easy to install
-- allow to run jasmine JS tests
+- tests
 - doc on "new project"
 - docs on "how to configure your project"
-- support multiple jetty versions
-- tests
-- custom load de actions em src/vraptor-console
+- generate vraptor-console on each package command so we can distribute it
+- release it
 
+TODO
+- allow to run jasmine JS tests
+- support multiple jetty versions
 - acceptance-test
 - allow to run acceptance tests via web
 - include vraptor-environment, vraptor-simplemail, vraptor-errorcontrol
