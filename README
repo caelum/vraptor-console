@@ -3,6 +3,7 @@ START:
 	java -Djava.security.policy=vraptor.police -jar vraptor-console.jar
 
 SUPPORTED
+
 	run ==> (re)starts the jetty server
 	restart ==> (re)starts the jetty server
 	stop ==> stops the jetty server
@@ -10,22 +11,35 @@ SUPPORTED
 	compile => mvn compile
 	war => mvn package
 	
+Production
+
+To go live, do:
+
+	mvn package
+	java -Dvraptor.webappdir=target/my-application.war -jar vraptor-console-1.0.0.jar
+
+Development
+
+	Support remote debug via port 1044, simply connect to it.
+
+	
 URIS
 
 	/target ==> display the target directory
 	/tests/unit ==> unitTests
 
 TODO
-- package: generate zip with main
-- vraptor-console script with huge memory allocation?
+- LIVE: do not add extra contexts 
+- LIVE: instead of -Dvraptor.webappdir use java -jar vraptor-console-1.0.0.jar run myapp.war
+- vraptor-console.sh with huge memory allocation
 - vraptor-console easy to install
 - allow to run jasmine JS tests
 - doc on "new project"
 - docs on "how to configure your project"
 - support multiple jetty versions
 - tests
+- custom load de actions em src/vraptor-console
 
-- support easy remote debug via eclipse
 - acceptance-test
 - allow to run acceptance tests via web
 - include vraptor-environment, vraptor-simplemail, vraptor-errorcontrol

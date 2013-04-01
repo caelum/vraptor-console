@@ -7,14 +7,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import br.com.caelum.vraptor.console.command.jetty.Main;
-import br.com.caelum.vraptor.console.command.jetty.Jetty8VRaptorServer;
-
 public class Restart implements Command {
 
 	@Override
 	public void execute() throws Exception {
-		System.out.println("Running");
+		new Maven().execute(new CommandLine("compile"));
 		if (new File("jetty").exists()) {
 			customNotImplementedJetty();
 		} else {
