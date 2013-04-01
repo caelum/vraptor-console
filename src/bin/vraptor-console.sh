@@ -1,5 +1,7 @@
 BINARY=vraptor-console-0.7.0-SNAPSHOT-distribution.jar
-TARGET=target/release/$BINARY
+BINARY_DIR=vraptor-console/
+TARGET=$BINARY_DIR/$BINARY
+mkdir -p $BINARY_DIR 
 
 # http://docs.oracle.com/javase/7/docs/technotes/guides/jpda/conninv.html
 if [ ! -f $TARGET ];
