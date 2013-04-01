@@ -6,7 +6,7 @@ public class War implements Command {
 
 	@Override
 	public void execute() throws IOException, InterruptedException  {
-		new Maven().execute(new CommandLine("war"));
+		new Maven().execute(new CommandLine("package"));
 	}
 
 }
