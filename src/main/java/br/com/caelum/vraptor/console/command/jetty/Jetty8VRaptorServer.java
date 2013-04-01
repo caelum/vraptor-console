@@ -1,5 +1,6 @@
 package br.com.caelum.vraptor.console.command.jetty;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -47,8 +48,13 @@ public class Jetty8VRaptorServer {
 	private static WebAppContext loadContext(String webappDirLocation, String webXmlLocation) {
 		WebAppContext context = new WebAppContext();
 		context.setContextPath(getContext());
-		context.setDescriptor(webXmlLocation);
-		context.setResourceBase(webappDirLocation);
+		File webapp = new File(webappDirLocation);
+		if (webapp.isDirectory()) {
+			context.setResourceBase(webappDirLocation);
+			context.setDescriptor(webXmlLocation);
+		} else {
+			context.setWar(webappDirLocation);
+		}
 		context.setParentLoaderPriority(true);
 		return context;
 	}

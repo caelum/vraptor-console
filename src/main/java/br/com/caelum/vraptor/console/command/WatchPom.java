@@ -40,9 +40,9 @@ public class WatchPom implements Command {
 		path.register(service, StandardWatchEventKinds.ENTRY_CREATE,
 				StandardWatchEventKinds.ENTRY_DELETE,
 				StandardWatchEventKinds.ENTRY_MODIFY);
-		if(recursive) {
-			for(File f : listeningTo.listFiles()) {
-				if(f.isDirectory()) {
+		if (recursive) {
+			for (File f : listeningTo.listFiles()) {
+				if (f.isDirectory() && f.exists()) {
 					configureWatcher(f, service, recursive);
 				}
 			}

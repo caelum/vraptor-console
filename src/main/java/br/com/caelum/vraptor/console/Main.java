@@ -1,6 +1,7 @@
 package br.com.caelum.vraptor.console;
 
 import java.io.InputStream;
+import java.net.URL;
 
 import br.com.caelum.vraptor.console.executor.CommandExecutor;
 import br.com.caelum.vraptor.console.executor.LogAndDelegate;
@@ -14,6 +15,9 @@ import br.com.caelum.vraptor.console.executor.SimpleCommandExecutor;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		URL policyUrl = Main.class.getResource("/vraptor.policy");
+		System.setProperty("java.security.policy", policyUrl.toString());
+		
 		CommandExecutor executor = grabExecutor();
 
 		System.out.println("Starting VRaptor Console");
