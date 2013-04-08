@@ -13,29 +13,35 @@ public class Restart implements Command {
 	public void execute() throws Exception {
 		new Maven().execute(new CommandLine("compile"));
 		if (new File("jetty").exists()) {
-			customNotImplementedJetty();
+			customJetty();
 		} else {
 			RunningServer.restart();
 		}
 	}
-	
+
 	private void customNotImplementedJetty() throws MalformedURLException,
-			ClassNotFoundException, NoSuchMethodException,
-			InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+			NoSuchMethodException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
 		// use esse diretorio
-		URLClassLoader loader = new URLClassLoader(new URL[] { new File(
-				"jetty").toURL() }, this.getClass().getClassLoader());
+		URLClassLoader loader = new URLClassLoader(
+				new URL[] { new File("jetty").toURL() }, this.getClass()
+						.getClassLoader());
 		Class<?> type;
 		try {
-			type = loader.loadClass(this.getClass().getPackage().getName() + ".Main");
+			type = loader.loadClass(this.getClass().getPackage().getName()
+					+ ".Main");
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		Method method = type.getMethod("main",
-				new Class[] { String[].class });
+		Method method = type.getMethod("main", new Class[] { String[].class });
 		Object instance = type.newInstance();
 		method.invoke(instance, new String[] {});
+	}
+
+	private void customJetty() {
+		throw new UnsupportedOperationException(
+				"/jetty dir found, but we haven't implemented "
+						+ "custom jetty servers support, contact the developers for more info");
 	}
 
 }
