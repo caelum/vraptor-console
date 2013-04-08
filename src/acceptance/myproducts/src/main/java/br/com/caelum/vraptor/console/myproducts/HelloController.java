@@ -8,7 +8,7 @@ public class HelloController {
 	
 	@Path("/")
 	public void index() {
-		System.out.println("Executing hello#index 333");
+		System.out.println("Executing hello#index 50");
 	}
 
 }

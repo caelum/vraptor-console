@@ -26,7 +26,12 @@ public class Restart implements Command {
 		// use esse diretorio
 		URLClassLoader loader = new URLClassLoader(new URL[] { new File(
 				"jetty").toURL() }, this.getClass().getClassLoader());
-		Class<?> type = loader.loadClass("br.....Main");
+		Class<?> type;
+		try {
+			type = loader.loadClass(this.getClass().getPackage().getName() + ".Main");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 		Method method = type.getMethod("main",
 				new Class[] { String[].class });
 		Object instance = type.newInstance();
