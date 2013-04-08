@@ -1,12 +1,10 @@
 package br.com.caelum.vraptor.console.command;
 
-import java.io.IOException;
 
-public class UnitTests implements Command {
+public class UnitTests extends MavenCommand {
 
-	@Override
-	public void execute() throws IOException, InterruptedException  {
-		new Maven().execute(new CommandLine("test", "surefire-report:report"));
+	UnitTests() {
+		super("test", "surefire-report:report");
 	}
 
 }

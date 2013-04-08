@@ -2,6 +2,6 @@ package br.com.caelum.vraptor.console.command;
 
 public interface Command {
 
-	void execute() throws Exception;
+	void execute(String[] args) throws Exception;
 
 }

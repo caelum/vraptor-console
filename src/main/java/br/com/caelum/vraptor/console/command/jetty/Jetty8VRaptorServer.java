@@ -1,46 +1,51 @@
 package br.com.caelum.vraptor.console.command.jetty;
 
 import java.io.File;
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import br.com.caelum.vraptor.console.command.UnitTests;
+import br.com.caelum.vraptor.console.command.jetty.context.ExceptProductionContextFactory;
+import br.com.caelum.vraptor.console.command.jetty.context.SystemRestartContext;
+import br.com.caelum.vraptor.console.command.jetty.context.TargetContext;
+import br.com.caelum.vraptor.console.command.jetty.context.UnitTestsContext;
 
 public class Jetty8VRaptorServer {
 
 	private final Server server;
 	private final ContextHandlerCollection contexts;
 
-	public Jetty8VRaptorServer(String webappDirLocation, String webXmlLocation) {
+	public Jetty8VRaptorServer(String webappDirLocation, String webXmlLocation) throws Exception {
 		this.server = createServer();
 		this.contexts = new ContextHandlerCollection();
 		reloadContexts(webappDirLocation, webXmlLocation);
+		start();
 	}
 
 	private void reloadContexts(String webappDirLocation, String webXmlLocation) {
 		WebAppContext context = loadContext(webappDirLocation, webXmlLocation);
-		contexts.setHandlers(new Handler[] { context, systemRestart(), unitTests(), targetContext() });
+		contexts.setHandlers(getHandlers(context));
 	}
 
-	private Handler targetContext() {
-		WebAppContext handler = new WebAppContext();
-		handler.setResourceBase("target");
-		handler.setContextPath("/target");
-		return handler;
+	private Handler[] getHandlers(WebAppContext context) {
+		List<ExceptProductionContextFactory> factories = Arrays.asList(new SystemRestartContext(this), new UnitTestsContext(), new TargetContext());
+		
+		List<Handler> handlers = new ArrayList<>();
+		handlers.add(context);
+		for (ContextFactory factory : factories) {
+			if(factory.shouldCreate(context)) {
+				handlers.add(factory.getContext());
+			}
+		}
+		return handlers.toArray(new Handler[0]);
 	}
 
-	public void start() throws Exception {
+	private void start() throws Exception {
 		server.setHandler(contexts);
 		server.start();
 	}
@@ -61,50 +66,6 @@ public class Jetty8VRaptorServer {
 
 	private static String getContext() {
 		return System.getProperty("vraptor.context", "/");
-	}
-
-	private ContextHandler systemRestart() {
-		AbstractHandler system = new AbstractHandler() {
-			@Override
-			public void handle(String target, Request baseRequest,
-					HttpServletRequest request, HttpServletResponse response)
-					throws IOException, ServletException {
-				restartContexts();
-				response.setContentType("text/html;charset=utf-8");
-				response.setStatus(HttpServletResponse.SC_OK);
-				baseRequest.setHandled(true);
-				response.getWriter().println("<h1>Done</h1>");
-			}
-		};
-		ContextHandler context = new ContextHandler();
-		context.setContextPath("/vraptor/restart");
-		context.setResourceBase(".");
-		context.setClassLoader(Thread.currentThread().getContextClassLoader());
-		context.setHandler(system);
-		return context;
-	}
-
-	private ContextHandler unitTests() {
-		AbstractHandler system = new AbstractHandler() {
-			@Override
-			public void handle(String target, Request baseRequest,
-					HttpServletRequest request, HttpServletResponse response)
-					throws IOException, ServletException {
-				try {
-					new UnitTests().execute();
-					response.sendRedirect("/target/site/surefire-report.html");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				baseRequest.setHandled(true);
-			}
-		};
-		ContextHandler context = new ContextHandler();
-		context.setContextPath("/vraptor/tests/unit");
-		context.setResourceBase(".");
-		context.setClassLoader(Thread.currentThread().getContextClassLoader());
-		context.setHandler(system);
-		return context;
 	}
 
 	public void restartContexts() {

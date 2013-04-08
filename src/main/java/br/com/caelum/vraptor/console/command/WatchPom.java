@@ -27,7 +27,7 @@ public class WatchPom implements Command {
 	private final static Maven mvn = new Maven();
 
 	@Override
-	public void execute() throws Exception {
+	public void execute(String[] args) throws Exception {
 		WatchService service = FileSystems.getDefault().newWatchService();
 		configureWatcher(new File("."), service, false);
 		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service, true);

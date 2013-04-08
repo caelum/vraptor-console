@@ -10,14 +10,24 @@ import java.net.URLClassLoader;
 public class Restart implements Command {
 
 	@Override
-	public void execute() throws Exception {
+	public void execute(String[] args) throws Exception {
 		new Maven().execute(new CommandLine("compile"));
 		if (new File("jetty").exists()) {
 			customJetty();
 		} else {
-			RunningServer.restart();
+			RunningServer.restart(getWebAppDir(args));
 		}
 	}
+
+	private String getWebAppDir(String[] args) {
+		return args.length > 1 ? args[1] : getPropertyWebAppDir();
+	}
+	
+	private static String getPropertyWebAppDir() {
+		return System.getProperty("vraptor.webappdir", "src/main/webapp/");
+	}
+
+
 
 	private void customNotImplementedJetty() throws MalformedURLException,
 			NoSuchMethodException, InstantiationException,

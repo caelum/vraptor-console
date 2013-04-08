@@ -14,10 +14,14 @@ SUPPORTED
 	
 Production
 
+In a production environment, no extra contexts are set up.
 To go live, do:
 
 	mvn package
-	java -Dvraptor.webappdir=target/my-application.war -jar vraptor-console-1.0.0.jar
+	VRAPTOR_ENVIRONMENT=production java -jar vraptor-console-1.0.0.jar 'run target/my-application.war'
+	
+Instead of setting the VRAPTOR_ENVIRONMENT, you can use a custom web.xml according to the vraptor-environment rules.
+
 
 Development
 
@@ -29,8 +33,6 @@ URIS
 	/tests/unit ==> unitTests
 
 TODO BEFORE RELEASE 1
-- LIVE: do not add extra contexts
-- LIVE: instead of -Dvraptor.webappdir use java -jar vraptor-console-1.0.0.jar run myapp.war
 - tests
 - doc on "new project"
 - docs on "how to configure your project"
