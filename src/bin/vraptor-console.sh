@@ -1,5 +1,5 @@
 BINARY=vraptor-console-0.7.0-SNAPSHOT-distribution.jar
-BINARY_DIR=vraptor-console/
+BINARY_DIR=vraptor-console/target/
 TARGET=$BINARY_DIR/$BINARY
 mkdir -p $BINARY_DIR 
 
