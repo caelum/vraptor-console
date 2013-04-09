@@ -1,5 +1,9 @@
 START:
 
+	./vraptor-console.sh
+
+Or
+
 	java -Djava.security.policy=vraptor.police -jar vraptor-console.jar
 
 SUPPORTED
@@ -18,7 +22,7 @@ In a production environment, no extra contexts are set up.
 To go live, do:
 
 	mvn package
-	VRAPTOR_ENVIRONMENT=production java -jar vraptor-console-1.0.0.jar 'run target/my-application.war'
+	VRAPTOR_ENVIRONMENT=production java -jar vraptor-console-1.0.0.jar 'run my-application.war'
 	
 Instead of setting the VRAPTOR_ENVIRONMENT, you can use a custom web.xml according to the vraptor-environment rules.
 
@@ -36,7 +40,6 @@ TODO BEFORE RELEASE 1
 - tests
 - doc on "new project"
 - docs on "how to configure your project"
-- generate vraptor-console on each package command so we can distribute it
 - release it
 
 TODO

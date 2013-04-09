@@ -11,9 +11,14 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.caelum.vraptor.console.command.jetty.Jetty8VRaptorServer;
 
 public class WatchPom implements Command {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
 
 	private final static CommandLine[] commands = new CommandLine[] {
 			command("compile"),
@@ -31,11 +36,14 @@ public class WatchPom implements Command {
 		WatchService service = FileSystems.getDefault().newWatchService();
 		configureWatcher(new File("."), service, false);
 		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service, true);
+		configureWatcher(new File("target/classes"), service, true);
 		watchForChanges(service, null);
 	}
 
 	private static void configureWatcher(File listeningTo, WatchService service, boolean recursive)
 			throws IOException {
+		if(!listeningTo.exists()) return;
+		LOGGER.debug("Listening to " + listeningTo.getPath());
 		Path path = listeningTo.toPath();
 		path.register(service, StandardWatchEventKinds.ENTRY_CREATE,
 				StandardWatchEventKinds.ENTRY_DELETE,
@@ -62,17 +70,17 @@ public class WatchPom implements Command {
 							Path filename = ev.context();
 							String name = filename.toFile().getName();
 							if (name.equals("pom.xml")) {
-								System.out.println("pom changed");
+								LOGGER.debug("pom changed");
 								runCommands();
 							} else if(name.endsWith(".class")) {
-								System.out.println("Needs to restart (class " + name + " changed)");
+								LOGGER.info("Needs to restart (class " + name + " changed)");
 							} else {
-								System.err.println("Change to " + name + " was ignored");
+								LOGGER.info("Change to " + name + " was ignored");
 							}
 						}
 						key.reset();
 					} catch (InterruptedException e) {
-						System.out.println("Unable to detect change");
+						LOGGER.warn("Unable to detect change");
 					}
 				}
 			}
@@ -87,8 +95,7 @@ public class WatchPom implements Command {
 				try {
 					mvn.execute(command);
 				} catch (Exception e) {
-					System.out.println("Unable to run " + command);
-					e.printStackTrace();
+					LOGGER.error("Unable to run " + command, e);
 				}
 			}
 		};

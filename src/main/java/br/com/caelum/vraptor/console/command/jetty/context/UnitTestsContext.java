@@ -12,7 +12,7 @@ public class UnitTestsContext extends ExceptProductionContextFactory {
 	public Handler getContext() {
 		return new SimpleContext("/vraptor/tests/unit", new Callable<String>() {
 			public String call() throws Exception {
-				new UnitTests().execute();
+				new UnitTests().execute(new String[]{});
 				return "<html><iframe style='width: 100%, height: 100%' src='/target/site/surefire-report.html'/></html>";
 			}
 		}).build();

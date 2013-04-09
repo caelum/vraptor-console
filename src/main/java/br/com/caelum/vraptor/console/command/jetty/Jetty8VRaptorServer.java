@@ -56,6 +56,7 @@ public class Jetty8VRaptorServer {
 		File webapp = new File(webappDirLocation);
 		if (webapp.isDirectory()) {
 			context.setResourceBase(webappDirLocation);
+			context.setExtraClasspath("target/classes");
 			context.setDescriptor(webXmlLocation);
 		} else {
 			context.setWar(webappDirLocation);

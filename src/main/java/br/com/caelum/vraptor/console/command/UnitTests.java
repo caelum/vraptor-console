@@ -1,9 +1,8 @@
 package br.com.caelum.vraptor.console.command;
 
-
 public class UnitTests extends MavenCommand {
 
-	UnitTests() {
+	public UnitTests() {
 		super("test", "surefire-report:report");
 	}
 
