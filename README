@@ -35,6 +35,21 @@ URIS
 
 	/target ==> display the target directory
 	/tests/unit ==> unitTests
+	
+	
+pom.xml
+
+	Any changes to your pom.xml will make WatchPom download the required libraries from the net and do a:
+	
+	mvn eclipse:eclipse
+	
+CONFIG A LEGACY PROJECT
+
+	Your classes should be compiled to "src/main/webapp/WEB-INF/classes". In your maven pom, configure:
+	
+	<build>
+		<outputDirectory>src/main/webapp/WEB-INF/classes/</outputDirectory>
+	</build>
 
 TODO BEFORE RELEASE 1
 - tests
@@ -48,3 +63,6 @@ TODO
 - acceptance-test
 - allow to run acceptance tests via web
 - include vraptor-environment, vraptor-simplemail, vraptor-errorcontrol
+- if you add a new jar while your server is running, you need to setExtraClasspath again...
+- if you server starts with problems, it seems like it gets stuck on 8080
+- when invoking Maven.execute(multipleCommands), it should invoke maven only once

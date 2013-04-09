@@ -20,14 +20,15 @@ public class WatchPom implements Command {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
 
-	private final static CommandLine[] commands = new CommandLine[] {
+	public final static String LIB_DIRECTORY = "target/vraptor-console/lib";
+	public final static CommandLine COPY_DEPENDENCIES = command("dependency:copy-dependencies",
+			"-DoutputDirectory=" + LIB_DIRECTORY,
+			"-DincludeScope=runtime", "-Dsilent=true",
+			"-DprependGroupId=true");
+	
+	private final static CommandLine[] POM_UPDATE_COMMANDS = new CommandLine[] {
 			command("compile"),
-			command("dependency:copy-dependencies",
-					"-DoutputDirectory=src/main/webapp/WEB-INF/lib",
-					"-DincludeScope=runtime",
-					"-Dsilent=true",
-					"-DprependGroupId=true"
-					) };
+			COPY_DEPENDENCIES, command("eclipse:eclipse", "-Dwtpversion=2.0") };
 
 	private final static Maven mvn = new Maven();
 
@@ -35,14 +36,15 @@ public class WatchPom implements Command {
 	public void execute(String[] args) throws Exception {
 		WatchService service = FileSystems.getDefault().newWatchService();
 		configureWatcher(new File("."), service, false);
-		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service, true);
-		configureWatcher(new File("target/classes"), service, true);
+		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service,
+				true);
 		watchForChanges(service, null);
 	}
 
-	private static void configureWatcher(File listeningTo, WatchService service, boolean recursive)
-			throws IOException {
-		if(!listeningTo.exists()) return;
+	private static void configureWatcher(File listeningTo,
+			WatchService service, boolean recursive) throws IOException {
+		if (!listeningTo.exists())
+			return;
 		LOGGER.debug("Listening to " + listeningTo.getPath());
 		Path path = listeningTo.toPath();
 		path.register(service, StandardWatchEventKinds.ENTRY_CREATE,
@@ -72,10 +74,12 @@ public class WatchPom implements Command {
 							if (name.equals("pom.xml")) {
 								LOGGER.debug("pom changed");
 								runCommands();
-							} else if(name.endsWith(".class")) {
-								LOGGER.info("Needs to restart (class " + name + " changed)");
+							} else if (name.endsWith(".class")) {
+								LOGGER.info("Needs to restart (class " + name
+										+ " changed)");
 							} else {
-								LOGGER.info("Change to " + name + " was ignored");
+								LOGGER.info("Change to " + name
+										+ " was ignored");
 							}
 						}
 						key.reset();
@@ -86,7 +90,7 @@ public class WatchPom implements Command {
 			}
 
 			private void runCommands() {
-				for (CommandLine command : commands) {
+				for (CommandLine command : POM_UPDATE_COMMANDS) {
 					runCommand(command);
 				}
 			}

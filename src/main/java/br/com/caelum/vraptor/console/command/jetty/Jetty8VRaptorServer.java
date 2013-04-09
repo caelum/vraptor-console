@@ -10,6 +10,8 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import br.com.caelum.vraptor.console.command.Maven;
+import br.com.caelum.vraptor.console.command.WatchPom;
 import br.com.caelum.vraptor.console.command.jetty.context.ExceptProductionContextFactory;
 import br.com.caelum.vraptor.console.command.jetty.context.SystemRestartContext;
 import br.com.caelum.vraptor.console.command.jetty.context.TargetContext;
@@ -20,7 +22,8 @@ public class Jetty8VRaptorServer {
 	private final Server server;
 	private final ContextHandlerCollection contexts;
 
-	public Jetty8VRaptorServer(String webappDirLocation, String webXmlLocation) throws Exception {
+	public Jetty8VRaptorServer(String webappDirLocation, String webXmlLocation)
+			throws Exception {
 		this.server = createServer();
 		this.contexts = new ContextHandlerCollection();
 		reloadContexts(webappDirLocation, webXmlLocation);
@@ -33,12 +36,14 @@ public class Jetty8VRaptorServer {
 	}
 
 	private Handler[] getHandlers(WebAppContext context) {
-		List<ExceptProductionContextFactory> factories = Arrays.asList(new SystemRestartContext(this), new UnitTestsContext(), new TargetContext());
-		
+		List<ExceptProductionContextFactory> factories = Arrays.asList(
+				new SystemRestartContext(this), new UnitTestsContext(),
+				new TargetContext());
+
 		List<Handler> handlers = new ArrayList<>();
 		handlers.add(context);
 		for (ContextFactory factory : factories) {
-			if(factory.shouldCreate(context)) {
+			if (factory.shouldCreate(context)) {
 				handlers.add(factory.getContext());
 			}
 		}
@@ -50,19 +55,35 @@ public class Jetty8VRaptorServer {
 		server.start();
 	}
 
-	private static WebAppContext loadContext(String webappDirLocation, String webXmlLocation) {
+	private static WebAppContext loadContext(String webappDirLocation,
+			String webXmlLocation) {
 		WebAppContext context = new WebAppContext();
 		context.setContextPath(getContext());
 		File webapp = new File(webappDirLocation);
 		if (webapp.isDirectory()) {
+			String allJars = getJars();
 			context.setResourceBase(webappDirLocation);
-			context.setExtraClasspath("target/classes");
+			context.setExtraClasspath(allJars);
 			context.setDescriptor(webXmlLocation);
 		} else {
 			context.setWar(webappDirLocation);
 		}
 		context.setParentLoaderPriority(true);
 		return context;
+	}
+
+	private static String getJars() {
+		File libDir = new File(WatchPom.LIB_DIRECTORY);
+		StringBuilder path = new StringBuilder();
+		for (File lib : libDir.listFiles()) {
+			String name = lib.getAbsolutePath();
+			if (name.endsWith(".jar")) {
+				path.append(name).append(';');
+			}
+		}
+		if (path.toString().isEmpty())
+			return "";
+		return path.toString().substring(0, path.length() - 1);
 	}
 
 	private static String getContext() {

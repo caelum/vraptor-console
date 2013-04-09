@@ -11,8 +11,8 @@ public class Restart implements Command {
 
 	@Override
 	public void execute(String[] args) throws Exception {
-		new Maven().execute(new CommandLine("compile"));
-		if (new File("jetty").exists()) {
+		new Maven().execute(new CommandLine("compile"),WatchPom.COPY_DEPENDENCIES);
+		if (new File("src/jetty").exists()) {
 			customJetty();
 		} else {
 			RunningServer.restart(getWebAppDir(args));
