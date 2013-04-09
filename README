@@ -1,10 +1,33 @@
-START:
+Running vraptor console:
 
 	./vraptor-console.sh
 
 Or
 
 	java -Djava.security.policy=vraptor.police -jar vraptor-console.jar
+
+
+How to create a new project:
+
+	Create a vraptor maven based project and add the one line of configuration from the Maven section.
+	
+How to run VRaptor-Console with your Maven project:
+
+First add to your pom.xml:
+
+	<build>
+		<outputDirectory>src/main/webapp/WEB-INF/classes/</outputDirectory>
+	</build>
+
+
+How to migrate another kind of project
+
+	Create a pom.xml just like https://github.com/caelum/vraptor-console/blob/master/src/acceptance/myproducts/pom.xml
+
+How to run VRaptor-Console with your Ant project:
+
+	???
+
 
 SUPPORTED
 
@@ -42,22 +65,17 @@ pom.xml
 	Any changes to your pom.xml will make WatchPom download the required libraries from the net and do a:
 	
 	mvn eclipse:eclipse
-	
-CONFIG A LEGACY PROJECT
-
-	Your classes should be compiled to "src/main/webapp/WEB-INF/classes". In your maven pom, configure:
-	
-	<build>
-		<outputDirectory>src/main/webapp/WEB-INF/classes/</outputDirectory>
-	</build>
 
 TODO BEFORE RELEASE 1
-- tests
-- doc on "new project"
-- docs on "how to configure your project"
+- command unit tests
+- tapa na pantera: documentacao aqui
+- doc for the vraptor documentation on how to create, config, run
 - release it
+- blog post
+- gnarus tutorial
 
 TODO
+- doc on how to use ant
 - allow to run jasmine JS tests
 - support multiple jetty versions
 - acceptance-test
