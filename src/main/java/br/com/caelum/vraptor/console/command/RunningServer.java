@@ -17,8 +17,10 @@ public class RunningServer {
 	}
 
 	public synchronized static void stop() throws Exception {
-		server.stop();
-		server = null;
+		if(server!=null) {
+			server.stop();
+			server = null;
+		}
 	}
 
 }

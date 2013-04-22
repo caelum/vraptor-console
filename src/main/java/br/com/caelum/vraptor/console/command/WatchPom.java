@@ -33,12 +33,12 @@ public class WatchPom implements Command {
 	private final static Maven mvn = new Maven();
 
 	@Override
-	public void execute(String[] args) throws Exception {
+	public void execute(String[] args, File output) throws Exception {
 		WatchService service = FileSystems.getDefault().newWatchService();
 		configureWatcher(new File("."), service, false);
 		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service,
 				true);
-		watchForChanges(service, null);
+		watchForChanges(service, null, output);
 	}
 
 	private static void configureWatcher(File listeningTo,
@@ -61,7 +61,7 @@ public class WatchPom implements Command {
 
 	@SuppressWarnings("unchecked")
 	private static void watchForChanges(final WatchService watcher,
-			final Jetty8VRaptorServer server) {
+			final Jetty8VRaptorServer server, final File output) {
 		Runnable onChange = new Runnable() {
 			public void run() {
 				while (true) {
@@ -97,7 +97,7 @@ public class WatchPom implements Command {
 
 			private void runCommand(CommandLine command) {
 				try {
-					mvn.execute(command);
+					mvn.execute(output, command);
 				} catch (Exception e) {
 					LOGGER.error("Unable to run " + command, e);
 				}

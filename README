@@ -67,7 +67,6 @@ pom.xml
 	mvn eclipse:eclipse
 
 TODO BEFORE RELEASE 1
-- command unit tests
 - tapa na pantera: documentacao aqui
 - doc for the vraptor documentation on how to create, config, run
 - release it
@@ -75,8 +74,11 @@ TODO BEFORE RELEASE 1
 - gnarus tutorial
 
 TODO
-- doc on how to use ant
+- unit tests auto refersh (+template engine)
+- if unit tests webpage is open, autorun tests every save?
+- commit option after unit tests are green?
 - allow to run jasmine JS tests
+- doc on how to use ant
 - support multiple jetty versions
 - acceptance-test
 - allow to run acceptance tests via web
