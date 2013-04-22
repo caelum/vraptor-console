@@ -20,4 +20,4 @@ DEBUG_OPTS=${DEBUG_OPTS:-"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,
 # http://docs.oracle.com/javase/7/docs/technotes/guides/jpda/conninv.html
 java ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
     -cp "${JETTY_DIST}/lib/*:${JETTY_DIST}/lib/jsp/*:$TARGET" \
-    br.com.caelum.vraptor.console.Main
+    br.com.caelum.vraptor.console.Main $@
