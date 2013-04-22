@@ -74,6 +74,9 @@ public class Jetty8VRaptorServer {
 	private static String getJars() {
 		File libDir = new File(WatchPom.LIB_DIRECTORY);
 		StringBuilder path = new StringBuilder();
+		if (!libDir.exists()) {
+			return "";
+		}
 		for (File lib : libDir.listFiles()) {
 			String name = lib.getAbsolutePath();
 			if (name.endsWith(".jar")) {
