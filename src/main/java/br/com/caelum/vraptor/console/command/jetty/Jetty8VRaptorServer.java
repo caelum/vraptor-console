@@ -10,7 +10,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import br.com.caelum.vraptor.console.command.Maven;
 import br.com.caelum.vraptor.console.command.WatchPom;
 import br.com.caelum.vraptor.console.command.jetty.context.ExceptProductionContextFactory;
 import br.com.caelum.vraptor.console.command.jetty.context.SystemRestartContext;

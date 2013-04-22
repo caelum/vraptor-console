@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.console.executor;
 
+import java.io.File;
+
 import br.com.caelum.vraptor.console.command.Command;
 
 public class SimpleCommandExecutor implements CommandExecutor {
@@ -14,10 +16,17 @@ public class SimpleCommandExecutor implements CommandExecutor {
 					"br.com.caelum.vraptor.console.command." + commandName)
 					.newInstance();
 			Command cmd = (Command) instance;
-			cmd.execute(args);
+			File tmp = getTempFile(commandName);
+			cmd.execute(args, tmp);
 		} catch (ClassNotFoundException e) {
 			System.err.println("Command " + commandName + " not found");
 		}
+	}
+
+	private File getTempFile(String commandName) {
+		File tmp = new File("target/" + System.currentTimeMillis() + "-vraptor-console-" + commandName + ".txt");
+		tmp.deleteOnExit();
+		return tmp;
 	}
 
 }

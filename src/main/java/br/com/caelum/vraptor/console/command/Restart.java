@@ -10,8 +10,8 @@ import java.net.URLClassLoader;
 public class Restart implements Command {
 
 	@Override
-	public void execute(String[] args) throws Exception {
-		new Maven().execute(new CommandLine("compile"),WatchPom.COPY_DEPENDENCIES);
+	public void execute(String[] args, File output) throws Exception {
+		new Maven().execute(output, new CommandLine("compile"),WatchPom.COPY_DEPENDENCIES);
 		if (new File("src/jetty").exists()) {
 			customJetty();
 		} else {
