@@ -13,7 +13,11 @@ if [ ! -d $JETTY_DIST ]; then
 	mv $RELEASE_PATH/jetty-distribution-8.*/ $RELEASE_PATH/jetty-distribution 
 fi
 
+PERM_GEM_OPTS=${PERM_GEM_OPTS:-"-XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"}
+MEM_OPTS=${MEM_OPTS:-"-Xmx2g -Xms1g"}
+DEBUG_OPTS=${DEBUG_OPTS:-"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"}
+
 # http://docs.oracle.com/javase/7/docs/technotes/guides/jpda/conninv.html
-java -Xmx2g -Xms1g -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044\
+java ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
     -cp "${JETTY_DIST}/lib/*:${JETTY_DIST}/lib/jsp/*:$TARGET" \
     br.com.caelum.vraptor.console.Main
