@@ -1,25 +1,26 @@
 VRaptor-Console
 ===============
+A console to support develop of webapps with a jetty server embedded and commons tasks such as running unit tests.
 
-Building from source:
----------------------
+Building from source
+--------------------
     git clone git@github.com:caelum/vraptor-console.git
     cd vraptor-console/
     PROJECT_HOME=/path/to/your/project scripts/deploy-to-acceptance.sh
 
 
-Running vraptor console:
-------------------------
+Running vraptor console
+-----------------------
 
     ./vraptor-console.sh
 
-How to create a new project:
-----------------------------
+How to create a new project
+---------------------------
 
 	Create a vraptor maven based project and add the one line of configuration from the Maven section.
 	
-How to run VRaptor-Console with your Maven project:
----------------------------------------------------
+How to run VRaptor-Console with your Maven project
+--------------------------------------------------
 
 Add to your pom.xml:
 
@@ -28,8 +29,8 @@ Add to your pom.xml:
 	</build>
 
 
-How to migrate another kind of project:
----------------------------------------
+How to migrate another kind of project
+--------------------------------------
 
 	Create a pom.xml based https://github.com/caelum/vraptor-console/blob/master/src/acceptance/myproducts/pom.xml
 
