@@ -7,7 +7,7 @@ JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-8/dist/jetty-distribution-8.
 if [ ! -f $TARGET ]; then
 	curl http://ibiblio.com/$BINARY > $TARGET
 fi
-if [ ! -f $JETTY_DIST ]; then
+if [ ! -d $JETTY_DIST ]; then
 	curl $JETTY_URL > $RELEASE_PATH/jetty-dist.zip
 	unzip $RELEASE_PATH/jetty-dist.zip -d $RELEASE_PATH >/dev/null
 	mv $RELEASE_PATH/jetty-distribution-8.*/ $RELEASE_PATH/jetty-distribution 
