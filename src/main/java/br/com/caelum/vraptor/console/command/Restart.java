@@ -15,19 +15,9 @@ public class Restart implements Command {
 		if (new File("src/jetty").exists()) {
 			customJetty();
 		} else {
-			RunningServer.restart(getWebAppDir(args));
+			new StartJetty().execute(args, output);
 		}
 	}
-
-	private String getWebAppDir(String[] args) {
-		return args.length > 1 ? args[1] : getPropertyWebAppDir();
-	}
-	
-	private static String getPropertyWebAppDir() {
-		return System.getProperty("vraptor.webappdir", "src/main/webapp/");
-	}
-
-
 
 	private void customNotImplementedJetty() throws MalformedURLException,
 			NoSuchMethodException, InstantiationException,
