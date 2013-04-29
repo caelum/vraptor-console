@@ -20,7 +20,7 @@ public class WatchPom implements Command {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
 
-	public final static String LIB_DIRECTORY = "target/vraptor-console/lib";
+	public final static String LIB_DIRECTORY = "src/main/webapp/WEB-INF/lib";
 	public final static CommandLine COPY_DEPENDENCIES = command("dependency:copy-dependencies",
 			"-DoutputDirectory=" + LIB_DIRECTORY,
 			"-DincludeScope=runtime", "-Dsilent=true",
