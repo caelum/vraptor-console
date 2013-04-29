@@ -1,7 +1,7 @@
 set -e
 
 PROJECT_HOME=${PROJECT_HOME:-src/acceptance/myproducts/}
-RELEASE_PATH=$PROJECT_HOME/vraptor-console/release/
+RELEASE_PATH=$PROJECT_HOME/.vraptor-console/release/
 
 mvn clean package
 

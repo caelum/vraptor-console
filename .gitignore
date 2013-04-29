@@ -4,5 +4,5 @@
 .project
 target
 *.jar
-src/acceptance/myproducts/vraptor-console/
+src/acceptance/myproducts/.vraptor-console/
 src/acceptance/myproducts/vraptor-console.sh
