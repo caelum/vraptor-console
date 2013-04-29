@@ -47,6 +47,7 @@ SUPPORTED
 	unitTests => mvn test surefire-report:report
 	compile => mvn compile
 	war => mvn package
+	new <groupId> <artifactId> => creates a new project with a basic pom.xml needed
 	custom class actions located in target/vraptor-console-extra will be loaded automatically 
 	
 Production
