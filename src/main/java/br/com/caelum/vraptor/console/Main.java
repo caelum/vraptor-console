@@ -22,7 +22,6 @@ public class Main {
 
 		System.out.println("Starting VRaptor Console");
 		CommandParser parser = getParser(args, executor);
-		parser.read("watchPom");
 		parser.readAll();
 	}
 
@@ -33,7 +32,9 @@ public class Main {
 			return new SingleCommand(commands, executor);
 		}
 		InputStream input = System.in;
-		return new InteractiveCommandParser(input, executor);
+		InteractiveCommandParser parser = new InteractiveCommandParser(input, executor);
+		parser.read("watchPom");
+		return parser;
 	}
 
 	private static CommandExecutor grabExecutor() {
