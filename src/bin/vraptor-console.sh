@@ -1,5 +1,9 @@
 BINARY=vraptor-console-0.7.0-SNAPSHOT-distribution.jar
-RELEASE_PATH=.vraptor-console/release/
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo $SCRIPT_DIR
+
+RELEASE_PATH=$SCRIPT_DIR/lib/
 TARGET=$RELEASE_PATH/$BINARY
 JETTY_DIST=$RELEASE_PATH/jetty-distribution/
 JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-8/dist/jetty-distribution-8.1.10.v20130312.zip"
