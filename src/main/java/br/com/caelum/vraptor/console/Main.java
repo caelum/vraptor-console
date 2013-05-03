@@ -30,10 +30,10 @@ public class Main {
 			throws Exception {
 		if (args.length != 0) {
 			String[] commands = args;
-			return new CommandParser(commands, executor);
+			return new SingleCommand(commands, executor);
 		}
 		InputStream input = System.in;
-		return new CommandParser(input, executor);
+		return new InteractiveCommandParser(input, executor);
 	}
 
 	private static CommandExecutor grabExecutor() {
