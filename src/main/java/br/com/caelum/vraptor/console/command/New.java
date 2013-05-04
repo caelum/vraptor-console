@@ -9,42 +9,84 @@ import java.util.Scanner;
 
 public class New implements Command {
 	
+	private static final String PROJECT_ARTIFACTID = "PROJECT_ARTIFACTID";
+	private static final String PROJECT_GROUPID = "PROJECT_GROUPID";
+	private static final String PROJECT_PACKAGE = "PROJECT_PACKAGE";
 	private String groupId = "br.com.caelum.vraptor.console";
 	private String artifcatId = "myproducts";
+	private File projectHome;
+	private String controllerPackagePath;
+	private File controllerPackage;
 
 	@Override
 	public void execute(String[] args, File output) throws Exception {
-		parseArgs(args);
+		parse(args);
+		projectHome = new File(artifcatId);
+		checkArgs();
 		String pomContent = readBasePom();
 		writePom(pomContent);
+		buildDirStructure();
+		String homeController = readHomeController();
+		writeController(homeController);
 	}
+
+
+
 
 	private String readBasePom() throws IOException {
 		InputStream is = getClass().getResourceAsStream("/pom.xml.example");
 		String pomContent = new Scanner(is).useDelimiter("$$").next();
 		is.close();
-		pomContent = pomContent.replace("PROJECT_GROUPID", groupId);
-		pomContent = pomContent.replace("PROJECT_ARTIFACTID", artifcatId);
+		pomContent = pomContent.replace(PROJECT_GROUPID, groupId);
+		pomContent = pomContent.replace(PROJECT_ARTIFACTID, artifcatId);
 		return pomContent;
 	}
 
 	private void writePom(String pomContent) throws FileNotFoundException {
-		File projectHome = new File(artifcatId);
-		if (projectHome.exists()) {
-			throw new RuntimeException(projectHome + " already exists!");
-		}
 		projectHome.mkdir();
 		File pomFile = new File(projectHome, "pom.xml");
 		PrintWriter printWriter = new PrintWriter(pomFile);
 		printWriter.print(pomContent);
 		printWriter.close();
 	}
+	
+	private void buildDirStructure() {
+		File mainSource = new File(projectHome, "src/main/java");
+		mainSource.mkdirs();
+		new File(projectHome, "src/main/resources").mkdirs();
+		new File(projectHome, "src/test/java").mkdirs();
+		new File(projectHome, "src/test/resources").mkdirs();
+		controllerPackage = new File(mainSource, controllerPackagePath.replace(".", "/"));
+		controllerPackage.mkdirs();
+	}
+	
+	private String readHomeController() throws IOException {
+		InputStream is = getClass().getResourceAsStream("/HomeController.java.example");
+		String controllerSource = new Scanner(is).useDelimiter("$$").next();
+		is.close();
+		controllerSource = controllerSource.replace(PROJECT_PACKAGE, controllerPackagePath);
+		return controllerSource;
+	}
+	
+	private void writeController(String controllerSource) throws FileNotFoundException {
+		File controller = new File(controllerPackage, "HomeController.java");
+		PrintWriter printWriter = new PrintWriter(controller);
+		printWriter.print(controllerSource);
+		printWriter.close();
+	}
+	
+	private void checkArgs() {
+		if (projectHome.exists()) {
+			throw new IllegalArgumentException(projectHome + " already exists!");
+		}
+	}
 
-	private void parseArgs(String[] args) {
+	private void parse(String[] args) {
 		if (args.length >= 2) {
 			groupId = args[1];
 			artifcatId = args[2];
 		}
+		this.controllerPackagePath = groupId + "." + artifcatId + ".controller";
 	}
 
 }
