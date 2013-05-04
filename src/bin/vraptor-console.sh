@@ -6,14 +6,14 @@ echo $SCRIPT_DIR
 RELEASE_PATH=$SCRIPT_DIR/lib/
 TARGET=$RELEASE_PATH/$BINARY
 JETTY_DIST=$RELEASE_PATH/jetty-distribution/
-JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-8/dist/jetty-distribution-8.1.10.v20130312.zip"
+JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-8/dist/jetty-distribution-8.1.10.v20130312.tar.gz"
 
 if [ ! -f $TARGET ]; then
 	curl http://ibiblio.com/$BINARY > $TARGET
 fi
 if [ ! -d $JETTY_DIST ]; then
-	curl $JETTY_URL > $RELEASE_PATH/jetty-dist.zip
-	unzip $RELEASE_PATH/jetty-dist.zip -d $RELEASE_PATH >/dev/null
+	curl $JETTY_URL > $RELEASE_PATH/jetty-dist.tar.gz
+	tar xzf $RELEASE_PATH/jetty-dist.tar.gz -C $RELEASE_PATH >/dev/null
 	mv $RELEASE_PATH/jetty-distribution-8.*/ $RELEASE_PATH/jetty-distribution 
 fi
 
