@@ -23,6 +23,7 @@ public class RedirectOutput implements Runnable {
 	@Override
 	public void run() {
 		try {
+			new File(target.getParent()).mkdirs();
 			FileWriter output = new FileWriter(target);
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
