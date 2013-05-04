@@ -201,7 +201,10 @@
 								<mkdir dir="${dist.dir}/vraptor-console/lib/"/>
 								<copy file="src/bin/vraptor-console.sh" todir="${dist.dir}/vraptor-console/"/>
 								<copy file="target/vraptor-console-${version}-distribution.jar" todir="${dist.dir}/vraptor-console/lib/"/>
+
 								<zip destfile="target/vraptor-console-${version}.zip" basedir="${dist.dir}"/>
+								<tar destfile="target/vraptor-console-${version}.tar" basedir="${dist.dir}"/>
+                                <gzip destfile="target/vraptor-console-${version}.tar.gz" src="target/vraptor-console-${version}.tar"/>
 							</tasks>
 						</configuration>
 						<goals>
