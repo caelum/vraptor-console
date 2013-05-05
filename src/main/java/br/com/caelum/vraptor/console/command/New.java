@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+
 public class New implements Command {
 	
 	private static final String PROJECT_ARTIFACTID = "PROJECT_ARTIFACTID";
@@ -19,8 +21,8 @@ public class New implements Command {
 	private File controllerPackage;
 
 	@Override
-	public void execute(String[] args, File output) throws Exception {
-		parse(args);
+	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
+		parse(parsedCommand);
 		projectHome = new File(artifcatId);
 		checkArgs();
 		String pomContent = readBasePom();
@@ -29,9 +31,6 @@ public class New implements Command {
 		String homeController = readHomeController();
 		writeController(homeController);
 	}
-
-
-
 
 	private String readBasePom() throws IOException {
 		InputStream is = getClass().getResourceAsStream("/pom.xml.example");
@@ -81,10 +80,10 @@ public class New implements Command {
 		}
 	}
 
-	private void parse(String[] args) {
-		if (args.length >= 2) {
-			groupId = args[1];
-			artifcatId = args[2];
+	private void parse(ParsedCommand parsedCommand) {
+		if (parsedCommand.argsCount() >= 2) {
+			groupId = parsedCommand.getArg(1);
+			artifcatId = parsedCommand.getArg(2);
 		}
 		this.controllerPackagePath = groupId + "." + artifcatId + ".controller";
 	}

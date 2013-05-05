@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.Handler;
 
 import br.com.caelum.vraptor.console.command.Execute;
 import br.com.caelum.vraptor.console.command.UnitTests;
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
 public class UnitTestsContext extends ExceptProductionContextFactory {
 
@@ -14,7 +15,7 @@ public class UnitTestsContext extends ExceptProductionContextFactory {
 	public Handler getContext() {
 		Callable<String> runUnit = new Callable<String>() {
 			public String call() throws Exception {
-				File output = Execute.inParallel(new UnitTests(), new String[]{});
+				File output = Execute.inParallel(new UnitTests(), new ParsedCommand("unitTests", new String[]{}));
 				String iFrameOutput = iframe("/" + output.getPath());
 				String iFrameReport = iframe("/target/site/surefire-report.html");
 				return "<html>(<a href='#' class='refresh'>refresh</a>)" + iFrameOutput + iFrameReport + "</html>";

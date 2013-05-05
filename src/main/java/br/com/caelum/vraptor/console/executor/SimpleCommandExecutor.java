@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.NoSuchElementException;
 
 import br.com.caelum.vraptor.console.command.Command;
-import br.com.caelum.vraptor.console.command.CommandClassesScanner;
+import br.com.caelum.vraptor.console.command.parser.CommandClassesScanner;
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
 public class SimpleCommandExecutor implements CommandExecutor {
 	
@@ -15,14 +16,13 @@ public class SimpleCommandExecutor implements CommandExecutor {
 	}
 
 	@Override
-	public void parse(String line) throws Exception {
-		String[] args = line.split("\\s+");
-		String commandName = args[0];
+	public void parse(ParsedCommand parsedCommand) throws Exception {
+		String commandName = parsedCommand.getCommand();
 		try {
 			Class<? extends Command> commandClass = commands.commandFor(commandName);
 			Command cmd = commandClass.newInstance();
 			File tmp = getTempFile(commandName);
-			cmd.execute(args, tmp);
+			cmd.execute(parsedCommand, tmp);
 		} catch (NoSuchElementException e) {
 			System.err.println("Command " + commandName + " not found");
 		}

@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.console;
+package br.com.caelum.vraptor.console.command.parser;
 
 public interface CommandParser {
 

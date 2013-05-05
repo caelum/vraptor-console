@@ -2,6 +2,8 @@ package br.com.caelum.vraptor.console.command;
 
 import java.io.File;
 
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+
 public class DelegateCommand implements Command {
 
 	private final Command delegate;
@@ -10,8 +12,8 @@ public class DelegateCommand implements Command {
 		this.delegate = delegate;
 	}
 
-	public void execute(String[] args, File output) throws Exception {
-		delegate.execute(args, output);
+	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
+		delegate.execute(parsedCommand, output);
 	}
 
 	

@@ -3,6 +3,10 @@ package br.com.caelum.vraptor.console;
 import java.io.InputStream;
 import java.net.URL;
 
+import br.com.caelum.vraptor.console.command.parser.CommandParser;
+import br.com.caelum.vraptor.console.command.parser.InteractiveCommandParser;
+import br.com.caelum.vraptor.console.command.parser.ParsedCommandFactory;
+import br.com.caelum.vraptor.console.command.parser.SingleCommand;
 import br.com.caelum.vraptor.console.executor.CommandExecutor;
 import br.com.caelum.vraptor.console.executor.LogAndDelegate;
 import br.com.caelum.vraptor.console.executor.LogExceptionExecutor;
@@ -29,10 +33,10 @@ public class Main {
 			throws Exception {
 		if (args.length != 0) {
 			String[] commands = args;
-			return new SingleCommand(commands, executor);
+			return new SingleCommand(commands, executor, new ParsedCommandFactory());
 		}
 		InputStream input = System.in;
-		InteractiveCommandParser parser = new InteractiveCommandParser(input, executor);
+		InteractiveCommandParser parser = new InteractiveCommandParser(input, executor, new ParsedCommandFactory());
 		parser.read("watchPom");
 		return parser;
 	}

@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.console;
+package br.com.caelum.vraptor.console.command.parser;
 
 import br.com.caelum.vraptor.console.executor.CommandExecutor;
 
@@ -6,8 +6,10 @@ public class SingleCommand implements CommandParser {
 	
 	private final CommandExecutor executor;
 	private final String command;
+	private final ParsedCommandFactory parsedCommandFactory;
 
-	public SingleCommand(String[] command, CommandExecutor executor) {
+	public SingleCommand(String[] command, CommandExecutor executor, ParsedCommandFactory parsedCommandFactory) {
+		this.parsedCommandFactory = parsedCommandFactory;
 		StringBuilder all = new StringBuilder();
 		for (String cmd : command) {
 			all.append(cmd);
@@ -21,7 +23,7 @@ public class SingleCommand implements CommandParser {
 
 	@Override
 	public void readAll() throws Exception {
-		executor.parse(command);
+		executor.parse(parsedCommandFactory.build(command));
 	}
 
 	@Override

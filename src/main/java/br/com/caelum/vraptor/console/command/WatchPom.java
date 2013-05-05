@@ -14,6 +14,8 @@ import java.nio.file.WatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+
 public class WatchPom implements Command {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
@@ -31,7 +33,7 @@ public class WatchPom implements Command {
 	private final static Maven mvn = new Maven();
 
 	@Override
-	public void execute(String[] args, File output) throws Exception {
+	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
 		WatchService service = FileSystems.getDefault().newWatchService();
 		configureWatcher(new File("."), service, false);
 		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service,

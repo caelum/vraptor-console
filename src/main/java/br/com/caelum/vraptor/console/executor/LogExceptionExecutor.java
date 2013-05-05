@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.console.executor;
 
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+
 public class LogExceptionExecutor implements CommandExecutor {
 
 	private final CommandExecutor executor;
@@ -9,11 +11,11 @@ public class LogExceptionExecutor implements CommandExecutor {
 	}
 
 	@Override
-	public void parse(String line) {
+	public void parse(ParsedCommand parsedCommand) {
 		try {
-			executor.parse(line);
+			executor.parse(parsedCommand);
 		} catch (Exception ex) {
-			System.out.println("Executing " + line + " threw an exception");
+			System.out.println("Executing " + parsedCommand + " threw an exception");
 			ex.printStackTrace();
 		}
 	}

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import br.com.caelum.vraptor.console.command.parser.CommandClassesScanner;
+
 public class CommandClassesScannerTest {
 
 	@Test

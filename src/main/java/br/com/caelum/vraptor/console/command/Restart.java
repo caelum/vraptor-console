@@ -2,15 +2,17 @@ package br.com.caelum.vraptor.console.command;
 
 import java.io.File;
 
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+
 public class Restart implements Command {
 
 	@Override
-	public void execute(String[] args, File output) throws Exception {
+	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
 		compileAndCopyDeps(output);
 		if (new File("src/jetty").exists()) {
 			customJetty();
 		} else {
-			new StartJetty().execute(args, output);
+			new StartJetty().execute(parsedCommand, output);
 		}
 	}
 

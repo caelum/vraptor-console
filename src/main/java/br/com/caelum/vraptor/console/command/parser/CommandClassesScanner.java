@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.console.command;
+package br.com.caelum.vraptor.console.command.parser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.reflections.Reflections;
+
+import br.com.caelum.vraptor.console.command.Command;
+import br.com.caelum.vraptor.console.command.CommandConfig;
 
 public class CommandClassesScanner {
 
