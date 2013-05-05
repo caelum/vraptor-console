@@ -6,11 +6,20 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 public class Maven {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Maven.class);
+	private final File output;
+	
+	@Inject
+	public Maven(@Named("MavenOutput") File output) {
+		this.output = output;
+	}
 
-	public void execute(File output, CommandLine... commands) {
+	public void execute(CommandLine... commands) {
 		for (CommandLine c : commands)
 			execute(output, c);
 	}
@@ -38,3 +47,4 @@ public class Maven {
 	}
 
 }
+

@@ -4,20 +4,29 @@ import java.io.File;
 
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
+import com.google.inject.Inject;
+
 public class Restart implements Command {
+	
+	private final Maven maven;
+
+	@Inject
+	public Restart(Maven maven) {
+		this.maven = maven;
+	}
 
 	@Override
-	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
-		compileAndCopyDeps(output);
+	public void execute(ParsedCommand parsedCommand) throws Exception {
+		compileAndCopyDeps();
 		if (new File("src/jetty").exists()) {
 			customJetty();
 		} else {
-			new StartJetty().execute(parsedCommand, output);
+			new StartJetty().execute(parsedCommand);
 		}
 	}
 
-	private void compileAndCopyDeps(File output) {
-		new Maven().execute(output, new CommandLine("compile"), WatchPom.COPY_DEPENDENCIES);
+	private void compileAndCopyDeps() {
+		maven.execute(new CommandLine("compile"), WatchPom.COPY_DEPENDENCIES);
 	}
 
 	private void customJetty() {

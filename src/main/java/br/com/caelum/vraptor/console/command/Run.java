@@ -1,10 +1,13 @@
 package br.com.caelum.vraptor.console.command;
 
+import com.google.inject.Inject;
+
 
 public class Run extends DelegateCommand {
 	
-	public Run() {
-		super(new Restart());
+	@Inject
+	public Run(Maven maven) {
+		super(new Restart(maven));
 	}
 
 }

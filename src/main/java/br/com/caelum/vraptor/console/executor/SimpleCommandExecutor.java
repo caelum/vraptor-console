@@ -7,6 +7,10 @@ import br.com.caelum.vraptor.console.command.Command;
 import br.com.caelum.vraptor.console.command.parser.CommandClassesScanner;
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
+
+/**
+ * @deprecated most of the commands built by this command executor won't work anymore, use GuiceBasedCommandExecutor
+ */
 public class SimpleCommandExecutor implements CommandExecutor {
 	
 	private CommandClassesScanner commands;
@@ -17,12 +21,11 @@ public class SimpleCommandExecutor implements CommandExecutor {
 
 	@Override
 	public void parse(ParsedCommand parsedCommand) throws Exception {
-		String commandName = parsedCommand.getCommand();
+		String commandName = parsedCommand.getCommandName();
 		try {
-			Class<? extends Command> commandClass = commands.commandFor(commandName);
+			Class<? extends Command> commandClass = commands.commandFor(parsedCommand);
 			Command cmd = commandClass.newInstance();
-			File tmp = getTempFile(commandName);
-			cmd.execute(parsedCommand, tmp);
+			cmd.execute(parsedCommand);
 		} catch (NoSuchElementException e) {
 			System.err.println("Command " + commandName + " not found");
 		}

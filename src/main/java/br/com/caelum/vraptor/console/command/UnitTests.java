@@ -1,9 +1,12 @@
 package br.com.caelum.vraptor.console.command;
 
+import com.google.inject.Inject;
+
 public class UnitTests extends MavenCommand {
 
-	public UnitTests() {
-		super("test", "surefire-report:report");
+	@Inject
+	public UnitTests(Maven maven) {
+		super(maven, "test", "surefire-report:report");
 	}
 
 }

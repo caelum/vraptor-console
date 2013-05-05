@@ -12,7 +12,7 @@ public class ParsedCommand {
 		this.args = args;
 	}
 
-	public String getCommand() {
+	public String getCommandName() {
 		return commandName;
 	}
 	

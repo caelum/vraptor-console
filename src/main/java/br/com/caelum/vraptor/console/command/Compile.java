@@ -1,10 +1,13 @@
 package br.com.caelum.vraptor.console.command;
 
+import com.google.inject.Inject;
+
 
 public class Compile extends MavenCommand {
 	
-	public Compile() {
-		super("compile");
+	@Inject
+	public Compile(Maven maven) {
+		super(maven, "compile");
 	}
 
 }

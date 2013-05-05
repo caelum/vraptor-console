@@ -1,5 +1,6 @@
 package br.com.caelum.vraptor.console.executor;
 
+import br.com.caelum.vraptor.console.command.Command;
 import br.com.caelum.vraptor.console.command.parser.CommandClassesScanner;
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 import br.com.caelum.vraptor.console.guice.VRaptorConsoleModule;
@@ -19,7 +20,9 @@ public class GuiceBasedCommandExecutor implements CommandExecutor {
 
 	@Override
 	public void parse(ParsedCommand parsedCommand) throws Exception {
-		
+		Class<? extends Command> commandClass = commands.commandFor(parsedCommand);
+		Command command = injector.getInstance(commandClass);
+		command.execute(parsedCommand);
 	}
 
 }

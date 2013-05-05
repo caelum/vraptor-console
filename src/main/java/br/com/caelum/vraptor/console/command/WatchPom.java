@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
+import com.google.inject.Inject;
+
 public class WatchPom implements Command {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
@@ -30,15 +32,20 @@ public class WatchPom implements Command {
 			command("compile"),
 			COPY_DEPENDENCIES, command("eclipse:eclipse", "-Dwtpversion=2.0") };
 
-	private final static Maven mvn = new Maven();
+	private final Maven mvn;
+	
+	@Inject
+	public WatchPom(Maven mvn) {
+		this.mvn = mvn;
+	}
 
 	@Override
-	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
+	public void execute(ParsedCommand parsedCommand) throws Exception {
 		WatchService service = FileSystems.getDefault().newWatchService();
 		configureWatcher(new File("."), service, false);
 		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service,
 				true);
-		watchForChanges(service, output);
+		watchForChanges(service);
 	}
 
 	private static void configureWatcher(File listeningTo,
@@ -60,7 +67,7 @@ public class WatchPom implements Command {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void watchForChanges(final WatchService watcher, final File output) {
+	private void watchForChanges(final WatchService watcher) {
 		Runnable onChange = new Runnable() {
 			public void run() {
 				while (true) {
@@ -96,7 +103,7 @@ public class WatchPom implements Command {
 
 			private void runCommand(CommandLine command) {
 				try {
-					mvn.execute(output, command);
+					mvn.execute(command);
 				} catch (Exception e) {
 					LOGGER.error("Unable to run " + command, e);
 				}

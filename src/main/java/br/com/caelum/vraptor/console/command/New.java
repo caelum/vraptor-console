@@ -21,7 +21,7 @@ public class New implements Command {
 	private File controllerPackage;
 
 	@Override
-	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
+	public void execute(ParsedCommand parsedCommand) throws Exception {
 		parse(parsedCommand);
 		projectHome = new File(artifcatId);
 		checkArgs();

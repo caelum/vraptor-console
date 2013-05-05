@@ -19,8 +19,8 @@ public class CommandClassesScanner {
 		addCommands();
 	}
 	
-	public Class<? extends Command> commandFor(String name) {
-		Class<? extends Command> clazz = commandsByName.get(name);
+	public Class<? extends Command> commandFor(ParsedCommand parsedCommand) {
+		Class<? extends Command> clazz = commandsByName.get(parsedCommand.getCommandName());
 		if (clazz == null) {
 			throw new NoSuchElementException("could not find command " + clazz);
 		}

@@ -14,7 +14,7 @@ public class Execute {
 			@Override
 			public void run() {
 				try {
-					cmd.execute(parsedCommand, output);
+					cmd.execute(parsedCommand);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

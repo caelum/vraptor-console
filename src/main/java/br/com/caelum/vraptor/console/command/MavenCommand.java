@@ -1,20 +1,20 @@
 package br.com.caelum.vraptor.console.command;
 
-import java.io.File;
-
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
 public abstract class MavenCommand implements Command {
 
 	private final String[] cmd;
+	private Maven maven;
 
-	MavenCommand(String... cmd) {
+	MavenCommand(Maven maven, String... cmd) {
+		this.maven = maven;
 		this.cmd = cmd;
 	}
 
 	@Override
-	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
-		new Maven().execute(output, new CommandLine(cmd));
+	public void execute(ParsedCommand parsedCommand) throws Exception {
+		maven.execute(new CommandLine(cmd));
 	}
 
 }

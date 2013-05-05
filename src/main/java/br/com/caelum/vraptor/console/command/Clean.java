@@ -1,8 +1,11 @@
 package br.com.caelum.vraptor.console.command;
 
+import com.google.inject.Inject;
+
 public class Clean extends MavenCommand {
 
-	public Clean() {
-		super("clean");
+	@Inject
+	public Clean(Maven maven) {
+		super(maven, "clean");
 	}
 }

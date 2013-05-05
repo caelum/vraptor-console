@@ -1,7 +1,5 @@
 package br.com.caelum.vraptor.console.command;
 
-import java.io.File;
-
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
 @CommandConfig(extraName=StartJetty.COMMAND_NAME)
@@ -10,7 +8,7 @@ public class StartJetty implements Command {
 	static final String COMMAND_NAME= "start-jetty";
 
 	@Override
-	public void execute(ParsedCommand parsedCommand, File output) throws Exception {
+	public void execute(ParsedCommand parsedCommand) throws Exception {
 		RunningServer.restart(getWebAppDir(parsedCommand));
 	}
 	

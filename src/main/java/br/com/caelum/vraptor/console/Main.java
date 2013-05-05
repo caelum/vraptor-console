@@ -8,9 +8,9 @@ import br.com.caelum.vraptor.console.command.parser.InteractiveCommandParser;
 import br.com.caelum.vraptor.console.command.parser.ParsedCommandFactory;
 import br.com.caelum.vraptor.console.command.parser.SingleCommand;
 import br.com.caelum.vraptor.console.executor.CommandExecutor;
+import br.com.caelum.vraptor.console.executor.GuiceBasedCommandExecutor;
 import br.com.caelum.vraptor.console.executor.LogAndDelegate;
 import br.com.caelum.vraptor.console.executor.LogExceptionExecutor;
-import br.com.caelum.vraptor.console.executor.SimpleCommandExecutor;
 
 /**
  * @author Chico Sokol
@@ -43,7 +43,7 @@ public class Main {
 
 	private static CommandExecutor grabExecutor() {
 		boolean DEBUG = true;
-		CommandExecutor executor = new SimpleCommandExecutor();
+		CommandExecutor executor = new GuiceBasedCommandExecutor();
 		if (DEBUG) {
 			executor = new LogAndDelegate(executor);
 		}
