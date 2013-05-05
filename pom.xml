@@ -33,8 +33,13 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.9-RC1</version>
+		</dependency>
 
-		<!-- Jetty -->
+		<!-- Jetty (provided) -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -106,18 +111,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <artifactId>maven-jar-plugin</artifactId> -->
-			<!-- <configuration> -->
-			<!-- <archive> -->
-			<!-- <manifest> -->
-			<!-- <mainClass>br.com.caelum.vraptor.console.Main</mainClass> -->
-			<!-- <addClasspath>true</addClasspath> -->
-			<!-- <classpathPrefix>./</classpathPrefix> -->
-			<!-- </manifest> -->
-			<!-- </archive> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -197,14 +190,18 @@
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<mkdir dir="${dist.dir}/vraptor-console/"/>
-								<mkdir dir="${dist.dir}/vraptor-console/lib/"/>
-								<copy file="src/bin/vraptor-console.sh" todir="${dist.dir}/vraptor-console/"/>
-								<copy file="target/vraptor-console-${version}-distribution.jar" todir="${dist.dir}/vraptor-console/lib/"/>
+								<mkdir dir="${dist.dir}/vraptor-console/" />
+								<mkdir dir="${dist.dir}/vraptor-console/lib/" />
+								<copy file="src/bin/vraptor-console.sh" todir="${dist.dir}/vraptor-console/" />
+								<copy file="target/vraptor-console-${version}-distribution.jar"
+									todir="${dist.dir}/vraptor-console/lib/" />
 
-								<zip destfile="target/vraptor-console-${version}.zip" basedir="${dist.dir}"/>
-								<tar destfile="target/vraptor-console-${version}.tar" basedir="${dist.dir}"/>
-                                <gzip destfile="target/vraptor-console-${version}.tar.gz" src="target/vraptor-console-${version}.tar"/>
+								<zip destfile="target/vraptor-console-${version}.zip"
+									basedir="${dist.dir}" />
+								<tar destfile="target/vraptor-console-${version}.tar"
+									basedir="${dist.dir}" />
+								<gzip destfile="target/vraptor-console-${version}.tar.gz"
+									src="target/vraptor-console-${version}.tar" />
 							</tasks>
 						</configuration>
 						<goals>
