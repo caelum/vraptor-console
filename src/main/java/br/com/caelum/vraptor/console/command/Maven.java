@@ -15,10 +15,12 @@ public class Maven {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Maven.class);
 	private final File output;
+	private File workingDir;
 	
 	@Inject
 	public Maven(@Named(MAVEN_OUTPUT) File output) {
 		this.output = output;
+		this.workingDir = new File(".");
 	}
 
 	public void execute(CommandLine... commands) {
@@ -29,8 +31,9 @@ public class Maven {
 	private void execute(File output, CommandLine command) {
 		try {
 			String[] commands = command.prepend("mvn");
-			Process process = new ProcessBuilder(commands).redirectErrorStream(
-					true).start();
+			Process process = new ProcessBuilder(commands)
+				.directory(workingDir)
+				.redirectErrorStream(true).start();
 			RedirectOutput redirectOutput = new RedirectOutput(output,
 					process.getInputStream());
 			new Thread(redirectOutput).start();
@@ -39,13 +42,18 @@ public class Maven {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	private void waitTillFinish(CommandLine command, Process process)
 			throws InterruptedException {
 		int value = process.waitFor();
 		if (value != 0) {
 			LOGGER.error("Unable to run " + command + ", returning " + value);
 		}
+	}
+	
+	public void useWorkingDir(File wd) {
+		workingDir = wd;
+		
 	}
 
 }

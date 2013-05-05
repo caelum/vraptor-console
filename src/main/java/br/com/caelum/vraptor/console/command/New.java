@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+import br.com.caelum.vraptor.console.guice.WorkingDir;
+
+import com.google.inject.Inject;
 
 public class New implements Command {
 	
@@ -19,15 +22,27 @@ public class New implements Command {
 	private File projectHome;
 	private String controllerPackagePath;
 	private File controllerPackage;
+	private final WorkingDir wd;
+	private final Maven maven;
+	private File mainSource;
+	
+	@Inject
+	public New(WorkingDir wd, Maven maven) {
+		this.wd = wd;
+		this.maven = maven;
+	}
 
 	@Override
 	public void execute(ParsedCommand parsedCommand) throws Exception {
 		parse(parsedCommand);
-		projectHome = new File(artifcatId);
+		projectHome = new File(wd.getDir(), artifcatId);
 		checkArgs();
 		String pomContent = readBasePom();
 		writePom(pomContent);
-		buildDirStructure();
+		
+		buildSourceFolders();
+		maven.useWorkingDir(projectHome);
+		maven.execute(new CommandLine("eclipse:eclipse"));
 		String homeController = readHomeController();
 		writeController(homeController);
 	}
@@ -49,14 +64,12 @@ public class New implements Command {
 		printWriter.close();
 	}
 	
-	private void buildDirStructure() {
-		File mainSource = new File(projectHome, "src/main/java");
+	private void buildSourceFolders() {
+		mainSource = new File(projectHome, "src/main/java");
 		mainSource.mkdirs();
 		new File(projectHome, "src/main/resources").mkdirs();
 		new File(projectHome, "src/test/java").mkdirs();
 		new File(projectHome, "src/test/resources").mkdirs();
-		controllerPackage = new File(mainSource, controllerPackagePath.replace(".", "/"));
-		controllerPackage.mkdirs();
 	}
 	
 	private String readHomeController() throws IOException {
@@ -68,6 +81,8 @@ public class New implements Command {
 	}
 	
 	private void writeController(String controllerSource) throws FileNotFoundException {
+		controllerPackage = new File(mainSource, controllerPackagePath.replace(".", "/"));
+		controllerPackage.mkdirs();
 		File controller = new File(controllerPackage, "HomeController.java");
 		PrintWriter printWriter = new PrintWriter(controller);
 		printWriter.print(controllerSource);
