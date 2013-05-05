@@ -1,24 +1,29 @@
 package br.com.caelum.vraptor.console.executor;
 
 import java.io.File;
+import java.util.NoSuchElementException;
 
 import br.com.caelum.vraptor.console.command.Command;
+import br.com.caelum.vraptor.console.command.CommandClassesScanner;
 
 public class SimpleCommandExecutor implements CommandExecutor {
+	
+	private CommandClassesScanner commands;
+
+	public SimpleCommandExecutor() {
+		commands = new CommandClassesScanner();
+	}
 
 	@Override
 	public void parse(String line) throws Exception {
 		String[] args = line.split("\\s+");
-		
-		String commandName = Character.toUpperCase(args[0].charAt(0)) + args[0].substring(1, args[0].length());
+		String commandName = args[0];
 		try {
-			Object instance = Class.forName(
-					"br.com.caelum.vraptor.console.command." + commandName)
-					.newInstance();
-			Command cmd = (Command) instance;
+			Class<? extends Command> commandClass = commands.commandFor(commandName);
+			Command cmd = commandClass.newInstance();
 			File tmp = getTempFile(commandName);
 			cmd.execute(args, tmp);
-		} catch (ClassNotFoundException e) {
+		} catch (NoSuchElementException e) {
 			System.err.println("Command " + commandName + " not found");
 		}
 	}

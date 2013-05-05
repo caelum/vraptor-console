@@ -2,6 +2,7 @@ package br.com.caelum.vraptor.console.command;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.reflections.Reflections;
@@ -16,13 +17,16 @@ public class CommandClassesScanner {
 	}
 	
 	public Class<? extends Command> commandFor(String name) {
-		return commandsByName.get(name);
+		Class<? extends Command> clazz = commandsByName.get(name);
+		if (clazz == null) {
+			throw new NoSuchElementException("could not find command " + clazz);
+		}
+		return clazz;
 	}
 
 	private void addCommands() {
 		Reflections reflections = new Reflections("br.com.caelum.vraptor.console.command");
 		Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
-		System.out.println(commands);
 		for (Class<? extends Command> commandClass : commands) {
 			addCommand(commandClass);
 		}
