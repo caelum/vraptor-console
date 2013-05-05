@@ -14,8 +14,6 @@ import java.nio.file.WatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.caelum.vraptor.console.command.jetty.Jetty8VRaptorServer;
-
 public class WatchPom implements Command {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
@@ -38,7 +36,7 @@ public class WatchPom implements Command {
 		configureWatcher(new File("."), service, false);
 		configureWatcher(new File("src/main/webapp/WEB-INF/classes"), service,
 				true);
-		watchForChanges(service, null, output);
+		watchForChanges(service, output);
 	}
 
 	private static void configureWatcher(File listeningTo,
@@ -60,8 +58,7 @@ public class WatchPom implements Command {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void watchForChanges(final WatchService watcher,
-			final Jetty8VRaptorServer server, final File output) {
+	private static void watchForChanges(final WatchService watcher, final File output) {
 		Runnable onChange = new Runnable() {
 			public void run() {
 				while (true) {
