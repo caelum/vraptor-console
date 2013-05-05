@@ -2,7 +2,7 @@ package br.com.caelum.vraptor.console.command;
 
 import java.io.File;
 
-@CommandConfig(name=StartJetty.COMMAND_NAME)
+@CommandConfig(extraName=StartJetty.COMMAND_NAME)
 public class StartJetty implements Command {
 	
 	static final String COMMAND_NAME= "start-jetty";

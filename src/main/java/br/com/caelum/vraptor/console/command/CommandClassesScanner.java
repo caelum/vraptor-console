@@ -37,7 +37,7 @@ public class CommandClassesScanner {
 		String className = commandClass.getSimpleName();
 		String commandName = extractName(className);
 		if (commandConfig != null) {
-			commandName = commandConfig.name();
+			commandsByName.put(commandConfig.extraName(), commandClass);
 		}
 		commandsByName.put(commandName, commandClass);
 	}
