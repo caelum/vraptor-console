@@ -27,7 +27,6 @@ public class RedirectOutput implements Runnable {
 			FileWriter output = new FileWriter(target);
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
-				System.out.println(line);
 				output.write(line + "\n");
 				output.flush();
 			}

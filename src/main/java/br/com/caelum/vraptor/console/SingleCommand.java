@@ -26,7 +26,8 @@ public class SingleCommand implements CommandParser {
 
 	@Override
 	public void read(String cmd) throws Exception {
-		executor.parse(cmd);
+		throw new UnsupportedOperationException(SingleCommand.class.getSimpleName() + " " +
+				"should be used to parse a single command with readAll method");
 	}
 
 }
