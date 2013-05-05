@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.console.command;
 
+import static br.com.caelum.vraptor.console.guice.VRaptorConsoleModule.MAVEN_OUTPUT;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +17,7 @@ public class Maven {
 	private final File output;
 	
 	@Inject
-	public Maven(@Named("MavenOutput") File output) {
+	public Maven(@Named(MAVEN_OUTPUT) File output) {
 		this.output = output;
 	}
 

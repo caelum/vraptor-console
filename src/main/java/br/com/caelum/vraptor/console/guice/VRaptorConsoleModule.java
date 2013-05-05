@@ -7,10 +7,12 @@ import com.google.inject.name.Names;
 
 public class VRaptorConsoleModule extends AbstractModule {
 	
+	public static final String MAVEN_OUTPUT = "MavenOutput";
+
 	@Override
 	protected void configure() {
 		bind(File.class)
-	        .annotatedWith(Names.named("MavenOutput"))
+	        .annotatedWith(Names.named(MAVEN_OUTPUT))
 	        .toInstance(new File("/tmp/output.txt"));
 	}
 
