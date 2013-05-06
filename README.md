@@ -80,6 +80,17 @@ To deploy to heroku you need to use the custom vraptor-buildpack. So, starting f
 	heroku buildpacks:set csokol/vraptor-buildpack -a example
 	git push heroku master
 	
+Customizing jetty version
+-------------------------
+In the first run of vraptor-console.sh, jetty-8.1.10 will be downloaded and used. To use other versions, 
+simply create a `vraptor-console.properties` file and define JETTY_URL variable with the url of jetty-dist to download.
+For example, to use jetty 9:
+
+	JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-9/dist/jetty-distribution-9.0.2.v20130417.tar.gz"  
+	
+Other variables may be overriden in `vraptor-console.properties` file. See `vraptor-console.sh`to find out which variables
+may be customized. 
+	
 Production
 ----------
 
@@ -87,12 +98,13 @@ In a production environment, no extra contexts are set up.
 To go live, do:
 
 	mvn package
-	VRAPTOR_ENVIRONMENT=production vraptor-console.sh 'run my-application.war'
+	echo "VRAPTOR_ENVIRONMENT=production" >> vraptor-console.properties
+	vraptor-console.sh 'run my-application.war'
 	
 Instead of setting the VRAPTOR_ENVIRONMENT, you can use a custom web.xml according to the vraptor-environment rules.
 
 pom.xml
-
-	Any changes to your pom.xml will make WatchPom download the required libraries from the net and do a:
+-------
+Any changes to your pom.xml will make WatchPom download the required libraries from the net and do a:
 	
-	mvn eclipse:eclipse
+mvn eclipse:eclipse
