@@ -6,19 +6,25 @@ Building from source
 --------------------
     git clone git@github.com:caelum/vraptor-console.git
     cd vraptor-console/
-    PROJECT_HOME=/path/to/your/project scripts/deploy-to-acceptance.sh
+    mvn package
+    
+This should generate `target/vraptor-console-0.7.0-SNAPSHOT.zip` file. Unzip this to some dir 
+and make sure to add `vraptor-console.sh` to your PATH. Example:
+	unzip target/vraptor-console-0.7.0-SNAPSHOT.zip -d ~/programs
+	export PATH=$PATH:~/programs/vraptor-console/
 
 
-Running vraptor console
------------------------
-
-    ./vraptor-console.sh
+Running
+-------
+If your path is configured correctly, open a terminal and simply run: 
+    vraptor-console.sh
 
 How to create a new project
 ---------------------------
+	vraptor-console.sh new com.mycompany.package appname
 
-	Create a vraptor maven based project and add the one line of configuration from the Maven section.
-	
+This will create a new folder `appname` with a default pom.xml required.	
+
 How to run VRaptor-Console with your Maven project
 --------------------------------------------------
 
