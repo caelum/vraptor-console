@@ -9,7 +9,10 @@ Building from source
     mvn package
     
 This should generate `target/vraptor-console-0.7.0-SNAPSHOT.zip` file. Unzip this to some dir 
-and make sure to add `vraptor-console.sh` to your PATH. Example:
+and make sure to add `vraptor-console.sh` to your PATH. 
+
+For Example:
+
 	unzip target/vraptor-console-0.7.0-SNAPSHOT.zip -d ~/programs
 	export PATH=$PATH:~/programs/vraptor-console/
 
@@ -17,6 +20,7 @@ and make sure to add `vraptor-console.sh` to your PATH. Example:
 Running
 -------
 If your path is configured correctly, open a terminal and simply run: 
+
     vraptor-console.sh
 
 How to create a new project
