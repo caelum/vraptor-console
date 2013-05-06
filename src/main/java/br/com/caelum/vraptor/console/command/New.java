@@ -50,7 +50,7 @@ public class New implements Command {
 
 	private void checkArgs() {
 		if (projectHome.exists()) {
-			throw new IllegalArgumentException(projectHome + " already exists!");
+			throw new IllegalArgumentException(projectHome.getAbsolutePath() + " already exists!");
 		}
 	}
 	
