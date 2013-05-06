@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.caelum.vraptor.console.command.newproject.CreateDotFiles;
 import br.com.caelum.vraptor.console.command.newproject.CopyHomeController;
 import br.com.caelum.vraptor.console.command.newproject.ExecuteMvnEclipse;
 import br.com.caelum.vraptor.console.command.newproject.NewProjectAction;
@@ -33,6 +34,7 @@ public class New implements Command {
 		actions.add(new WritePom());
 		actions.add(new ExecuteMvnEclipse(maven));
 		actions.add(new CopyHomeController());
+		actions.add(new CreateDotFiles());
 		return actions;
 	}
 
