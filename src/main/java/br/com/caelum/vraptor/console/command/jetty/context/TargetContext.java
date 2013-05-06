@@ -8,7 +8,7 @@ public class TargetContext extends ExceptProductionContextFactory {
 	public Handler getContext() {
 		WebAppContext handler = new WebAppContext();
 		handler.setResourceBase("target");
-		handler.setContextPath("/target");
+		handler.setContextPath("/vraptor/target");
 		return handler;
 	}
 
