@@ -25,6 +25,7 @@ public class CopyHomeController implements NewProjectAction {
 			String homeController = readHomeController();
 			writeController(homeController);
 			copyHomeJsp();
+			copyWebXml();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -36,6 +37,14 @@ public class CopyHomeController implements NewProjectAction {
 		jspDir.mkdirs();
 		File jsp = new File(jspDir, "home.jsp");
 		write(jspContent, jsp);
+	}
+	
+	private void copyWebXml() throws IOException {
+		String webxml = read("/web.xml.example");
+		File webxmlDir = new File(projectHome, "src/main/webapp/WEB-INF/");
+		webxmlDir.mkdirs();
+		File jsp = new File(webxmlDir, "web.xml");
+		write(webxml, jsp);
 	}
 
 	private String readHomeController() throws IOException {

@@ -21,8 +21,8 @@ public class UnitTestsContext extends ExceptProductionContextFactory {
 				Maven maven = new Maven(output);
 				UnitTests unitTests = new UnitTests(maven);
 				Execute.inParallel(unitTests, new ParsedCommand("unitTests", new String[]{}));
-				String iFrameOutput = iframe("/" + output.getPath());
-				String iFrameReport = iframe("/target/site/surefire-report.html");
+				String iFrameOutput = iframe("/vraptor/" + output.getPath());
+				String iFrameReport = iframe("/vraptor/target/site/surefire-report.html");
 				return "<html>(<a href='#' class='refresh'>refresh</a>)" + iFrameOutput + iFrameReport + "</html>";
 			}
 
