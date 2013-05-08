@@ -77,6 +77,7 @@ To deploy to heroku you need to use the custom vraptor-buildpack. So, starting f
 	git init .
 	git commit -am "initial commit"
 	heroku create example
+    heroku plugins:install https://github.com/heroku/heroku-buildpacks
 	heroku buildpacks:set csokol/vraptor-buildpack -a example
 	git push heroku master
 	
