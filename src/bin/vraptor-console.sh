@@ -26,7 +26,11 @@ if [ ! -d $JETTY_DIST ]; then
 		exit 1
 	fi
 	tar xzf $RELEASE_PATH/jetty-dist.tar.gz -C $RELEASE_PATH >/dev/null
-	mv $RELEASE_PATH/jetty-distribution-*/ $RELEASE_PATH/jetty-distribution 
+    mkdir $RELEASE_PATH/jetty-distribution
+    # we actually just need lib dir
+	mv $RELEASE_PATH/jetty-distribution-* $RELEASE_PATH/jetty-tmp/
+	mv $RELEASE_PATH/jetty-tmp/lib $RELEASE_PATH/jetty-distribution/
+    rm -rf $RELEASE_PATH/jetty-distribution-+/ $RELEASE_PATH/jetty-tmp/ $RELEASE_PATH/jetty-dist.tar.gz
 fi
 
 
