@@ -35,6 +35,6 @@ fi
 
 
 # http://docs.oracle.com/javase/7/docs/technotes/guides/jpda/conninv.html
-java ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
+java ${EXTRA_VM_OPTS} ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
     -cp "${JETTY_DIST}/lib/*:${JETTY_DIST}/lib/jsp/*:$TARGET:$EXTRA_COMMANDS" \
     br.com.caelum.vraptor.console.Main $@
