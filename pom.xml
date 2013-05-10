@@ -198,6 +198,7 @@
 								<mkdir dir="${dist.dir}/vraptor-console/" />
 								<mkdir dir="${dist.dir}/vraptor-console/lib/" />
 								<copy file="src/bin/vraptor-console.sh" todir="${dist.dir}/vraptor-console/" />
+                                <copy file="src/test/resources/log4j.xml" todir="${dist.dir}/vraptor-console/" />
 								<copy file="target/vraptor-console-${version}-distribution.jar"
 									todir="${dist.dir}/vraptor-console/lib/" />
 

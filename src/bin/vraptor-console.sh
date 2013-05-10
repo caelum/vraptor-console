@@ -11,6 +11,7 @@ RELEASE_PATH=$SCRIPT_DIR/lib/
 TARGET=$RELEASE_PATH/$BINARY
 JETTY_DIST=$RELEASE_PATH/jetty-distribution/
 JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-8/dist/jetty-distribution-8.1.10.v20130312.tar.gz"
+LOG4J_CONFIG="${SCRIPT_DIR}/log4j.xml"
 
 if [ -e vraptor-console.properties ]; then
 	source vraptor-console.properties
@@ -35,6 +36,6 @@ fi
 
 
 # http://docs.oracle.com/javase/7/docs/technotes/guides/jpda/conninv.html
-java ${EXTRA_VM_OPTS} ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
+java -Dlog4j.configuration=file:${LOG4J_CONFIG} ${EXTRA_VM_OPTS} ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
     -cp "${JETTY_DIST}/lib/*:${JETTY_DIST}/lib/jsp/*:$TARGET:$EXTRA_COMMANDS" \
     br.com.caelum.vraptor.console.Main $@
