@@ -2,26 +2,30 @@ VRaptor-Console
 ===============
 A console to support develop of webapps with a jetty server embedded and commons tasks such as running unit tests.
 
-Building from source
---------------------
-    git clone git@github.com:caelum/vraptor-console.git
-    cd vraptor-console/
-    mvn package
-    
-This should generate `target/vraptor-console-0.7.0-SNAPSHOT.zip` file. Unzip this to some dir 
-and make sure to add `vraptor-console.sh` to your PATH. 
 
-For example:
+Installing
+----------
+Download vraptor-console tar.gz distribution avaiable here: http://code.google.com/p/vraptor-console/downloads/list
 
-	unzip target/vraptor-console-0.7.0-SNAPSHOT.zip -d ~/programs
+Then, unpack the tar it and add the extracted directory to your PATH. For example:
+
+	tar xzf vraptor-console-0.7.0-SNAPSHOT.tar.gz -C ~/programs
 	export PATH=$PATH:~/programs/vraptor-console/
-
 
 Running
 -------
 If your path is configured correctly, open a terminal and simply run: 
 
     vraptor-console.sh
+
+Building from source
+--------------------
+    git clone git@github.com:caelum/vraptor-console.git
+    cd vraptor-console/
+    mvn package
+    
+This should generate `target/vraptor-console-0.7.0-SNAPSHOT.tar.gz` file. Unpack this file to some dir 
+and make sure to add `vraptor-console.sh` to your PATH. 
 
 How to create a new project
 ---------------------------
