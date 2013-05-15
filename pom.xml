@@ -13,6 +13,7 @@
 		<jetty.version>8.1.10.v20130312</jetty.version>
 		<jetty.jsp.version>8.1.10.v20130312</jetty.jsp.version>
 		<dist.dir>target/dist/</dist.dir>
+		<executable>vraptor-console</executable>
 	</properties>
 
 	<scm>
@@ -197,8 +198,8 @@
 							<tasks>
 								<mkdir dir="${dist.dir}/vraptor-console/" />
 								<mkdir dir="${dist.dir}/vraptor-console/lib/" />
-								<copy file="src/bin/vraptor-console.sh" todir="${dist.dir}/vraptor-console/" />
-								<chmod file="${dist.dir}/vraptor-console/vraptor-console.sh"
+								<copy file="src/bin/${executable}" todir="${dist.dir}/vraptor-console/" />
+								<chmod file="${dist.dir}/vraptor-console/${executable}"
 									perm="a+rx" />
 								<copy file="src/test/resources/log4j.xml" todir="${dist.dir}/vraptor-console/" />
 								<copy file="target/vraptor-console-${version}-distribution.jar"
