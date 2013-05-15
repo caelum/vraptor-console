@@ -16,7 +16,7 @@ Running
 -------
 If your path is configured correctly, open a terminal and simply run: 
 
-    vraptor-console.sh
+    vraptor-console
 
 Building from source
 --------------------
@@ -25,11 +25,11 @@ Building from source
     mvn package
     
 This should generate `target/vraptor-console-0.7.0-SNAPSHOT.tar.gz` file. Unpack this file to some dir 
-and make sure to add `vraptor-console.sh` to your PATH. 
+and make sure to add `vraptor-console` to your PATH. 
 
 How to create a new project
 ---------------------------
-	vraptor-console.sh new com.mycompany.package appname
+	vraptor-console new com.mycompany.package appname
 
 This will create a new folder `appname` with a default pom.xml required.	
 
@@ -76,7 +76,7 @@ Deploy to heroku
 
 To deploy to heroku you need to use the custom vraptor-buildpack. So, starting from scratch:
 
-	vraptor-console.sh new br.com.caelum example
+	vraptor-console new br.com.caelum example
 	cd example/
 	git init .
 	git commit -am "initial commit"
@@ -87,13 +87,13 @@ To deploy to heroku you need to use the custom vraptor-buildpack. So, starting f
 	
 Customizing jetty version
 -------------------------
-In the first run of vraptor-console.sh, jetty-8.1.10 will be downloaded and used. To use other versions, 
+In the first run of vraptor-console, jetty-8.1.10 will be downloaded and used. To use other versions, 
 simply create a `vraptor-console.properties` file and define JETTY_URL variable with the url of jetty-dist to download.
 For example, to use jetty 9:
 
 	JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-9/dist/jetty-distribution-9.0.2.v20130417.tar.gz"  
 	
-Other variables may be overriden in `vraptor-console.properties` file. See `vraptor-console.sh`to find out which variables
+Other variables may be overriden in `vraptor-console.properties` file. See `vraptor-console` script to find out which variables
 may be customized. 
 	
 Production
@@ -104,7 +104,7 @@ To go live, do:
 
 	mvn package
 	echo "VRAPTOR_ENVIRONMENT=production" >> vraptor-console.properties
-	vraptor-console.sh 'run my-application.war'
+	vraptor-console 'run my-application.war'
 	
 Instead of setting the VRAPTOR_ENVIRONMENT, you can use a custom web.xml according to the vraptor-environment rules.
 
