@@ -14,10 +14,11 @@ public class CreateDotFiles implements NewProjectAction {
 			new File(projectHome, ".vraptor").createNewFile();
 			File gitignore = new File(projectHome, ".gitignore");
 			PrintWriter printWriter = new PrintWriter(gitignore);
-			printWriter.print("bin/");
-			printWriter.print("target/");
-			printWriter.print("*.class");
-			printWriter.print("*.jar");
+			printWriter.println("bin/");
+			printWriter.println("target/");
+			printWriter.println("*.class");
+			printWriter.println("*.jar");
+			printWriter.close();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
