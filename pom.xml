@@ -198,16 +198,17 @@
 								<mkdir dir="${dist.dir}/vraptor-console/" />
 								<mkdir dir="${dist.dir}/vraptor-console/lib/" />
 								<copy file="src/bin/vraptor-console.sh" todir="${dist.dir}/vraptor-console/" />
-                                <copy file="src/test/resources/log4j.xml" todir="${dist.dir}/vraptor-console/" />
+								<chmod file="${dist.dir}/vraptor-console/vraptor-console.sh"
+									perm="a+rx" />
+								<copy file="src/test/resources/log4j.xml" todir="${dist.dir}/vraptor-console/" />
 								<copy file="target/vraptor-console-${version}-distribution.jar"
 									todir="${dist.dir}/vraptor-console/lib/" />
 
-								<zip destfile="target/vraptor-console-${version}.zip"
-									basedir="${dist.dir}" />
-								<tar destfile="target/vraptor-console-${version}.tar"
-									basedir="${dist.dir}" />
-								<gzip destfile="target/vraptor-console-${version}.tar.gz"
-									src="target/vraptor-console-${version}.tar" />
+								<tar compression="gzip" destfile="target/vraptor-console-${version}.tar.gz">
+									<tarfileset dir="${dist.dir}" filemode="755">
+										<include name="**/*" />
+									</tarfileset>
+								</tar>
 							</tasks>
 						</configuration>
 						<goals>
