@@ -7,7 +7,10 @@ public class JettyMain {
 
 		String webXmlLocation = getWebXmlLocation(webappLocation);
 
-		return new Jetty8VRaptorServer(webappLocation, webXmlLocation);
+		Jetty8VRaptorServer server = new Jetty8VRaptorServer();
+		server.loadContextsFromWebappDir(webappLocation, webXmlLocation);
+		server.start();
+		return server;
 	}
 
 	private static String getWebXmlLocation(String webappDirLocation) {

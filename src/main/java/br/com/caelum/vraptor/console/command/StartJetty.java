@@ -13,7 +13,7 @@ public class StartJetty implements Command {
 	}
 	
 	private String getWebAppDir(ParsedCommand parsedCommand) {
-		return parsedCommand.argsCount() > 1 ? parsedCommand.getArg(0) : getPropertyWebAppDir();
+		return parsedCommand.argsCount() > 0 ? parsedCommand.getArg(0) : getPropertyWebAppDir();
 	}
 	
 	private static String getPropertyWebAppDir() {

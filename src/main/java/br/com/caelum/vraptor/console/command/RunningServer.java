@@ -1,5 +1,6 @@
 package br.com.caelum.vraptor.console.command;
 
+
 import br.com.caelum.vraptor.console.command.jetty.Jetty8VRaptorServer;
 import br.com.caelum.vraptor.console.command.jetty.JettyMain;
 
@@ -19,7 +20,7 @@ public class RunningServer {
 	}
 
 	public synchronized static void stop() throws Exception {
-		if(server!=null) {
+		if (server!=null) {
 			server.stop();
 			server = null;
 		}

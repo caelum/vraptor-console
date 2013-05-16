@@ -21,17 +21,27 @@ public class Jetty8VRaptorServer {
 	private final Server server;
 	private final ContextHandlerCollection contexts;
 
-	public Jetty8VRaptorServer(String webappDirLocation, String webXmlLocation)
-			throws Exception {
+	public Jetty8VRaptorServer() {
 		this.server = createServer();
 		this.contexts = new ContextHandlerCollection();
-		reloadContexts(webappDirLocation, webXmlLocation);
-		start();
 	}
 
-	private void reloadContexts(String webappDirLocation, String webXmlLocation) {
+	void loadContextsFromWebappDir(String webappDirLocation, String webXmlLocation) {
 		WebAppContext context = loadContext(webappDirLocation, webXmlLocation);
 		contexts.setHandlers(getHandlers(context));
+	}
+	
+	public void runWar(String warPath) throws Exception {
+		WebAppContext context = contextWithPath();
+		context.setWar(warPath);
+		server.setHandler(context);
+		server.start();
+	}
+
+	private WebAppContext contextWithPath() {
+		WebAppContext context = new WebAppContext();
+		context.setContextPath(getContext());
+		return context;
 	}
 
 	private Handler[] getHandlers(WebAppContext context) {
@@ -49,29 +59,23 @@ public class Jetty8VRaptorServer {
 		return handlers.toArray(new Handler[0]);
 	}
 
-	private void start() throws Exception {
+	public void start() throws Exception {
 		server.setHandler(contexts);
 		server.start();
 	}
 
-	private static WebAppContext loadContext(String webappDirLocation,
+	private WebAppContext loadContext(String webappDirLocation,
 			String webXmlLocation) {
-		WebAppContext context = new WebAppContext();
-		context.setContextPath(getContext());
-		File webapp = new File(webappDirLocation);
-		if (webapp.isDirectory()) {
-			String allJars = getJars();
-			context.setResourceBase(webappDirLocation);
-			context.setExtraClasspath(allJars);
-			context.setDescriptor(webXmlLocation);
-		} else {
-			context.setWar(webappDirLocation);
-		}
+		WebAppContext context = contextWithPath();
+		String allJars = getJars();
+		context.setResourceBase(webappDirLocation);
+		context.setExtraClasspath(allJars);
+		context.setDescriptor(webXmlLocation);
 		context.setParentLoaderPriority(true);
 		return context;
 	}
 
-	private static String getJars() {
+	private String getJars() {
 		File libDir = new File(WatchPom.LIB_DIRECTORY);
 		StringBuilder path = new StringBuilder();
 		if (!libDir.exists()) {
@@ -101,7 +105,7 @@ public class Jetty8VRaptorServer {
 		}
 	}
 
-	private static Server createServer() {
+	private Server createServer() {
 		String webPort = getPort();
 		if (webPort == null || webPort.isEmpty()) {
 			webPort = "8080";
@@ -110,7 +114,7 @@ public class Jetty8VRaptorServer {
 		return server;
 	}
 
-	private static String getPort() {
+	private String getPort() {
 		return System.getenv("PORT");
 	}
 
