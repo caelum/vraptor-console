@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.caelum.vraptor.console.command.newproject.CreateDotFiles;
 import br.com.caelum.vraptor.console.command.newproject.CopyHomeController;
+import br.com.caelum.vraptor.console.command.newproject.CreateDotFiles;
 import br.com.caelum.vraptor.console.command.newproject.ExecuteMvnEclipse;
 import br.com.caelum.vraptor.console.command.newproject.NewProjectAction;
 import br.com.caelum.vraptor.console.command.newproject.WritePom;
@@ -41,7 +41,7 @@ public class New implements Command {
 	@Override
 	public void execute(ParsedCommand parsedCommand) throws Exception {
 		if (parsedCommand.argsCount() >= 2) {
-			artifcatId = parsedCommand.getArg(2);
+			artifcatId = parsedCommand.getArg(1);
 		}
 		projectHome = new File(wd.getDir(), artifcatId);
 		checkArgs();

@@ -47,8 +47,8 @@ public class WritePom implements NewProjectAction {
 	
 	private void parse(ParsedCommand parsedCommand) {
 		if (parsedCommand.argsCount() >= 2) {
-			groupId = parsedCommand.getArg(1);
-			artifcatId = parsedCommand.getArg(2);
+			groupId = parsedCommand.getArg(0);
+			artifcatId = parsedCommand.getArg(1);
 		}
 	}
 

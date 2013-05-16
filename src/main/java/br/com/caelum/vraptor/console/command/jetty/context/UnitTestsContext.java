@@ -8,7 +8,7 @@ import org.eclipse.jetty.server.Handler;
 import br.com.caelum.vraptor.console.command.Execute;
 import br.com.caelum.vraptor.console.command.Maven;
 import br.com.caelum.vraptor.console.command.UnitTests;
-import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+import br.com.caelum.vraptor.console.command.parser.ParsedCommandFactory;
 
 public class UnitTestsContext extends ExceptProductionContextFactory {
 
@@ -20,7 +20,7 @@ public class UnitTestsContext extends ExceptProductionContextFactory {
 				output.deleteOnExit();
 				Maven maven = new Maven(output);
 				UnitTests unitTests = new UnitTests(maven);
-				Execute.inParallel(unitTests, new ParsedCommand("unitTests", new String[]{}));
+				Execute.inParallel(unitTests, ParsedCommandFactory.commandFor("unitTests"));
 				String iFrameOutput = iframe("/vraptor/" + output.getPath());
 				String iFrameReport = iframe("/vraptor/target/site/surefire-report.html");
 				return "<html>(<a href='#' class='refresh'>refresh</a>)" + iFrameOutput + iFrameReport + "</html>";

@@ -1,13 +1,13 @@
 package br.com.caelum.vraptor.console.command.parser;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class ParsedCommand {
 
 	private final String commandName;
-	private final String[] args;
+	private final List<String> args;
 
-	public ParsedCommand(String commandName, String[] args) {
+	public ParsedCommand(String commandName, List<String> args) {
 		this.commandName = commandName;
 		this.args = args;
 	}
@@ -16,21 +16,25 @@ public class ParsedCommand {
 		return commandName;
 	}
 	
-	public String[] getArgs() {
+	public List<String> getArgs() {
 		return args;
 	}
 
 	public int argsCount() {
-		return args.length;
+		return args.size();
 	}
 	
+	/**
+	 * @param i zero based index
+	 * @return get the i-nth argument of this command
+	 */
 	public String getArg(int i) {
-		return args[i];
+		return args.get(i);
 	}
 
 	@Override
 	public String toString() {
-		return commandName + " (arguments = " + Arrays.toString(args) + ")";
+		return commandName + " (arguments = " + args + ")";
 	}
 	
 	

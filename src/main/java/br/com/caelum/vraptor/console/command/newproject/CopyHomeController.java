@@ -78,8 +78,8 @@ public class CopyHomeController implements NewProjectAction {
 		String groupId = "br.com.caelum.vraptor.console";
 		String artifcatId = "myproducts";
 		if (parsedCommand.argsCount() >= 2) {
-			groupId = parsedCommand.getArg(1);
-			artifcatId = parsedCommand.getArg(2);
+			groupId = parsedCommand.getArg(0);
+			artifcatId = parsedCommand.getArg(1);
 		}
 		this.controllerPackagePath = groupId + "." + artifcatId + ".controller";
 	}
