@@ -10,7 +10,7 @@ EXTRA_COMMANDS=target/vraptor-console-extra/
 RELEASE_PATH=$SCRIPT_DIR/lib/
 TARGET=$RELEASE_PATH/$BINARY
 JETTY_DIST=$RELEASE_PATH/jetty-distribution/
-JETTY_URL="http://eclipse.c3sl.ufpr.br/jetty/stable-8/dist/jetty-distribution-8.1.10.v20130312.tar.gz"
+JETTY_URL="https://vraptor-console.googlecode.com/files/jetty-distribution-8.1.9.v20130131.tar.gz"
 LOG4J_CONFIG="${SCRIPT_DIR}/log4j.xml"
 
 if [ -e vraptor-console.properties ]; then
