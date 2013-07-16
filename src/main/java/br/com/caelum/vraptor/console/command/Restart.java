@@ -26,7 +26,7 @@ public class Restart implements Command {
 	}
 
 	private void compileAndCopyDeps() {
-		maven.execute(new CommandLine("compile"), WatchPom.COPY_DEPENDENCIES);
+		maven.execute(new CommandLine("clean"), new CommandLine("compile"), WatchPom.COPY_DEPENDENCIES);
 	}
 
 	private void customJetty() {

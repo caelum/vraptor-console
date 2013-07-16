@@ -30,6 +30,7 @@
 			<version>1.2</version>
 		</dependency>
 
+		<!-- dependencies provided by the servlet container -->
 		<!-- JSP -->
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
@@ -53,6 +54,16 @@
 			<version>1.2</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- end of dependencies provided by the servlet container -->
+            
 
 		<!-- TEST DEPENDENCIES -->
 		<dependency>
