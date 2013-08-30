@@ -19,21 +19,25 @@ import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 import com.google.inject.Inject;
 
 public class WatchPom implements Command {
-	
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(WatchPom.class);
 
 	public final static String LIB_DIRECTORY = "src/main/webapp/WEB-INF/lib";
-	public final static CommandLine COPY_DEPENDENCIES = command("dependency:copy-dependencies",
+	public final static CommandLine[] COPY_DEPENDENCIES = new CommandLine[] {
+		command("clean"),
+		command("dependency:copy-dependencies",
 			"-DoutputDirectory=" + LIB_DIRECTORY,
 			"-DincludeScope=runtime", "-Dsilent=true",
-			"-DprependGroupId=true");
-	
-	private final static CommandLine[] POM_UPDATE_COMMANDS = new CommandLine[] {
+			"-DprependGroupId=true") };
+
+	public final static CommandLine[] POM_UPDATE_COMMANDS = new CommandLine[] {
+			COPY_DEPENDENCIES[0],
+			COPY_DEPENDENCIES[1],
 			command("compile"),
-			COPY_DEPENDENCIES, command("eclipse:eclipse", "-Dwtpversion=2.0") };
+			command("eclipse:eclipse", "-Dwtpversion=2.0") };
 
 	private final Maven mvn;
-	
+
 	@Inject
 	public WatchPom(Maven mvn) {
 		this.mvn = mvn;
@@ -50,8 +54,9 @@ public class WatchPom implements Command {
 
 	private static void configureWatcher(File listeningTo,
 			WatchService service, boolean recursive) throws IOException {
-		if (!listeningTo.exists())
+		if (!listeningTo.exists()) {
 			return;
+		}
 		LOGGER.debug("Listening to " + listeningTo.getPath());
 		Path path = listeningTo.toPath();
 		path.register(service, StandardWatchEventKinds.ENTRY_CREATE,
@@ -69,6 +74,7 @@ public class WatchPom implements Command {
 	@SuppressWarnings("unchecked")
 	private void watchForChanges(final WatchService watcher) {
 		Runnable onChange = new Runnable() {
+			@Override
 			public void run() {
 				while (true) {
 					try {

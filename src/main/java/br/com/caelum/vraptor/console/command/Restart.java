@@ -7,7 +7,7 @@ import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 import com.google.inject.Inject;
 
 public class Restart implements Command {
-	
+
 	private final Maven maven;
 
 	@Inject
@@ -26,7 +26,7 @@ public class Restart implements Command {
 	}
 
 	private void compileAndCopyDeps() {
-		maven.execute(new CommandLine("clean"), new CommandLine("compile"), WatchPom.COPY_DEPENDENCIES);
+		maven.execute(WatchPom.POM_UPDATE_COMMANDS);
 	}
 
 	private void customJetty() {
