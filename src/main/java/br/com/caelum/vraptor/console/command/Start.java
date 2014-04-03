@@ -1,5 +1,6 @@
 package br.com.caelum.vraptor.console.command;
 
+import static br.com.caelum.vraptor.console.command.WatchPom.COPY_DEPENDENCIES;
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 import br.com.caelum.vraptor.undertown.builder.ServerBuilder;
 
@@ -16,8 +17,7 @@ public class Start implements Command {
 
 	@Override
 	public void execute(ParsedCommand parsedCommand) throws Exception {
-		maven.execute(new CommandLine("clean"), new CommandLine("compile"), 
-				WatchPom.COPY_DEPENDENCIES);
+		maven.execute(new CommandLine("clean"), new CommandLine("compile"), COPY_DEPENDENCIES[0], COPY_DEPENDENCIES[1]);
 		ServerBuilder.context("/app").webAppFolder("src/main/webapp")
 			.warName("app").port(8080).address("localhost").start();
 	}
