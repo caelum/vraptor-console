@@ -10,8 +10,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<jetty.version>8.1.10.v20130312</jetty.version>
-		<jetty.jsp.version>8.1.10.v20130312</jetty.jsp.version>
 		<dist.dir>target/dist/</dist.dir>
 		<executable>vraptor-console</executable>
 	</properties>
@@ -43,32 +41,6 @@
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
 			<version>0.9.9-RC1</version>
-		</dependency>
-
-		<!-- Jetty (provided) -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlets</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- TEST DEPENDENCIES -->
