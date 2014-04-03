@@ -21,15 +21,6 @@ public class CommandClassesScannerTest {
 	}
 
 	
-	@Test
-	public void should_find_correct_name_for_annotated_command() {
-		CommandClassesScanner scanner = new CommandClassesScanner();
-		Class<? extends Command> withExtraName = scanner.commandFor(parse(StartJetty.COMMAND_NAME));
-		Class<? extends Command> withDefaultName = scanner.commandFor(parse("startJetty"));
-		assertEquals(StartJetty.class, withDefaultName);
-		assertEquals(StartJetty.class, withExtraName);
-	}
-
 	private ParsedCommand parse(String cmd) {
 		return commandFactory.build(cmd);
 	}

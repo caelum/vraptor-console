@@ -7,7 +7,6 @@ public class Stop implements Command {
 
 	@Override
 	public void execute(ParsedCommand parsedCommand) throws Exception {
-		RunningServer.stop();
 	}
 
 }

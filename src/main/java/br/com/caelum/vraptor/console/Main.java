@@ -19,9 +19,6 @@ import br.com.caelum.vraptor.console.executor.LogExceptionExecutor;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		URL policyUrl = Main.class.getResource("/vraptor.policy");
-		System.setProperty("java.security.policy", policyUrl.toString());
-		
 		CommandExecutor executor = grabExecutor();
 
 		System.out.println("Starting VRaptor Console");
