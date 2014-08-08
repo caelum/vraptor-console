@@ -2,11 +2,11 @@ package br.com.caelum.vraptor.console.myproducts;
 
 import java.util.Arrays;
 
+import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
-@Resource
+@Controller
 public class HelloController {
 	
 	private final Result result;
