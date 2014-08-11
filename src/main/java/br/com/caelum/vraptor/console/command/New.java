@@ -1,18 +1,12 @@
 package br.com.caelum.vraptor.console.command;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.caelum.vraptor.console.command.newproject.CopyHomeController;
-import br.com.caelum.vraptor.console.command.newproject.CreateDotFiles;
-import br.com.caelum.vraptor.console.command.newproject.ExecuteMvnEclipse;
-import br.com.caelum.vraptor.console.command.newproject.NewProjectAction;
-import br.com.caelum.vraptor.console.command.newproject.WritePom;
+import br.com.caelum.vraptor.console.command.newproject.*;
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 import br.com.caelum.vraptor.console.guice.WorkingDir;
 
-import com.google.inject.Inject;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class New implements Command {
 	
@@ -22,10 +16,9 @@ public class New implements Command {
 	private final List<NewProjectAction> actions;
 	private final Maven maven;
 	
-	@Inject
-	public New(WorkingDir wd, Maven maven) {
-		this.wd = wd;
-		this.maven = maven;
+	public New() {
+		this.wd = new WorkingDir(new File("."));
+		this.maven = new Maven();
 		actions = buildActions();
 	}
 

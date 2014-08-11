@@ -1,18 +1,15 @@
 package br.com.caelum.vraptor.console.command;
 
-import java.io.File;
-
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
-import com.google.inject.Inject;
+import java.io.File;
 
 public class Restart implements Command {
 
 	private final Maven maven;
 
-	@Inject
-	public Restart(Maven maven) {
-		this.maven = maven;
+	public Restart() {
+		this.maven = new Maven();
 	}
 
 	@Override

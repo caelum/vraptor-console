@@ -1,15 +1,10 @@
 package br.com.caelum.vraptor.console.command;
 
-import static br.com.caelum.vraptor.console.guice.VRaptorConsoleModule.MAVEN_OUTPUT;
-
-import java.io.File;
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import java.io.File;
+import java.io.IOException;
 
 public class Maven {
 
@@ -17,9 +12,8 @@ public class Maven {
 	private final File output;
 	private File workingDir;
 	
-	@Inject
-	public Maven(@Named(MAVEN_OUTPUT) File output) {
-		this.output = output;
+	public Maven() {
+		this.output = new File("/tmp/output.txt");
 		this.workingDir = new File(".");
 	}
 

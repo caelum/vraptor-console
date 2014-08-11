@@ -1,4 +1,4 @@
-BINARY=vraptor-console-0.7.0-SNAPSHOT-distribution.jar
+BINARY=vraptor-console-0.7.0-SNAPSHOT.jar
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -35,7 +35,9 @@ if [ ! -d $JETTY_DIST ]; then
 fi
 
 
+CLASSPATH="$SCRIPT_DIR/lib/*:$SCRIPT_DIR/lib/deps/*:${JETTY_DIST}/lib/*:${JETTY_DIST}/lib/jsp/*:$EXTRA_COMMANDS"
+
 # http://docs.oracle.com/javase/7/docs/technotes/guides/jpda/conninv.html
 java -Dlog4j.configuration=file:${LOG4J_CONFIG} ${EXTRA_VM_OPTS} ${PERM_GEM_OPTS} ${MEM_OPTS} ${DEBUG_OPTS} \
-    -cp "${JETTY_DIST}/lib/*:${JETTY_DIST}/lib/jsp/*:$TARGET:$EXTRA_COMMANDS" \
+    -cp $CLASSPATH \
     br.com.caelum.vraptor.console.Main $@

@@ -1,21 +1,18 @@
 package br.com.caelum.vraptor.console.command.newproject;
 
-import java.io.File;
-
 import br.com.caelum.vraptor.console.command.CommandLine;
 import br.com.caelum.vraptor.console.command.Maven;
 import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 
-import com.google.inject.Inject;
+import java.io.File;
 
 public class ExecuteMvnEclipse implements NewProjectAction {
 	
 	private final Maven mvn;
 	private File mainSource;
 
-	@Inject
 	public ExecuteMvnEclipse(Maven mvn) {
-		this.mvn = mvn;
+		this.mvn = new Maven();
 	}
 
 	@Override

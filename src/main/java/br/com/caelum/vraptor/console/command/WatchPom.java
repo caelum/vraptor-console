@@ -1,22 +1,14 @@
 package br.com.caelum.vraptor.console.command;
 
-import static br.com.caelum.vraptor.console.command.CommandLine.command;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
-
+import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.caelum.vraptor.console.command.parser.ParsedCommand;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
 
-import com.google.inject.Inject;
+import static br.com.caelum.vraptor.console.command.CommandLine.command;
 
 public class WatchPom implements Command {
 
@@ -38,9 +30,8 @@ public class WatchPom implements Command {
 
 	private final Maven mvn;
 
-	@Inject
 	public WatchPom(Maven mvn) {
-		this.mvn = mvn;
+		this.mvn = new Maven();
 	}
 
 	@Override
