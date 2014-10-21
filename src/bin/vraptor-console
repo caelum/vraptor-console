@@ -1,6 +1,11 @@
 BINARY=vraptor-console-0.7.0-SNAPSHOT.jar
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [ -L ${BASH_SOURCE[0]} ]; then
+        VRAPTOR_CONSOLE_PATH="$( dirname "$( readlink -f ${BASH_SOURCE[0]} )" )"
+else
+        VRAPTOR_CONSOLE_PATH="$( dirname "${BASH_SOURCE[0]}" )"
+fi
+SCRIPT_DIR="$( cd "${VRAPTOR_CONSOLE_PATH}" && pwd )"
 
 PERM_GEM_OPTS=${PERM_GEM_OPTS:-"-XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"}
 MEM_OPTS=${MEM_OPTS:-"-Xmx2g -Xms1g"}
