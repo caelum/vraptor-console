@@ -15,4 +15,10 @@ public class ParsedCommandFactoryTest extends ParsedCommandFactory {
 		assertEquals("command", cmd.getCommandName());
 	}
 
+
+        @Test(expected = IllegalArgumentException.class)
+        public void should_throw_exception_from_empty_string() {
+	        ParsedCommandFactory factory = new ParsedCommandFactory();
+		ParsedCommand cmd = factory.build(" ");
+         }
 }
